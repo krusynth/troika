@@ -12,7 +12,7 @@ export class SocketConnection {
     console.log('init: this.socket', this.socket);
     if(!this.socket) {
       console.log('connecting');
-      this.socket = io.connect('//localhost');
+      this.socket = io.connect(`//${window.location.hostname}`);
 
       return new Promise((resolve, reject) => {
         this.listen('connect', resolve);

@@ -30,7 +30,7 @@ const config = {
     resave: true,
     saveUninitialized: true,
     cookie: {
-      maxAge: 365*24*60*60*1000 // 1 Week
+      maxAge: 365*24*60*60*1000 // 1 Year
     },
     store: new FileStore({
       // TODO: Put this in config
