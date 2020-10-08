@@ -1,0 +1,21 @@
+<section class="player-dice drawer" id="player-dice-drawer" ng-class="{hide: !$ctrl.parent.drawers.dice}">
+  <div class="action-buttons">
+    <dice-button dice="2d6" roll="$ctrl.roll(dice)">
+      <die-icon value="2d6"></die-icon>
+    </dice-button>
+    <dice-button dice="1d6" roll="$ctrl.roll(dice)">
+      <die-icon value="1d6"></die-icon>
+    </dice-button>
+    <dice-button dice="d66" roll="$ctrl.roll(dice)">
+      <die-icon value="d66"></die-icon>
+    </dice-button>
+    <dice-button dice="1d3" roll="$ctrl.roll(dice)">
+      <die-icon value="1d3"></die-icon>
+    </dice-button>
+    <dice-button dice="1d20" roll="$ctrl.roll(dice)">
+      <die-icon value="1d20"></die-icon>
+    </dice-button>
+  </div>
+
+  <input class="dice-result field" type="number" id="dice-result" readonly=true ng-model="result"/>
+</section>

@@ -1,0 +1,56 @@
+<section class="log-page" id="log-page">
+  <h2>Events</h2>
+  <ul id="log-list" class="log-list">
+    <li ng-repeat="msg in content.messages" class="{{msg.type}}">
+      <span ng-switch on="msg.type">
+        <span ng-switch-when="roll">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span ng-if="msg.character.name">
+            <span class="chr-name">{{msg.character.name}}</span>
+            <span ng-if="msg.character.background">the
+              <span class="chr-background">{{msg.character.background}}</span>
+            </span>
+          </span>
+          <span ng-if="!msg.character.name">
+            <span class="plyr-name">{{msg.player.name}}</span>
+          </span>
+          rolls
+          <span ng-bind-html="trustAsHtml(msg.die)"></span>
+
+          <span class="roll-result">{{msg.result}}</span>
+        </span><!-- /roll -->
+
+        <span ng-switch-when="playerJoined">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span ng-if="msg.player.character.name">
+            <span class="chr-name">{{msg.player.character.name}}</span>
+            <span ng-if="msg.player.character.background">the
+              <span class="chr-background">{{msg.player.character.background}}</span>
+            </span>
+          </span>
+          <span ng-if="!msg.character.name">
+            <span class="plyr-name">{{msg.player.player.name}}</span>
+          </span>
+          has joined the room.
+        </span>
+        <span ng-switch-when="playerUpdated">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span class="plyr-name">{{msg.player.player.name}}</span>
+          is now
+          <span ng-if="msg.player.character.name">
+            <span class="chr-name">{{msg.player.character.name}}</span>
+            <span ng-if="msg.player.character.background">the
+              <span class="chr-background">{{msg.player.character.background}}</span>
+            </span>
+          </span>
+          <span ng-if="!msg.player.character.name">
+            <span class="plyr-name">{{msg.player.player.name}}</span>
+          </span>
+        </span>
+      </span>
+    </li>
+  </ul>
+</section>

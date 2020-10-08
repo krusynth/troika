@@ -1,0 +1,639 @@
+/*
+ * main.scss
+ */
+
+@import 'reset';
+@import 'web-fonts';
+@import 'variables';
+
+body {
+  @extend %text-normal;
+
+  font-size: 1.1rem;
+  background: url(/assets/img/myfreetextures-wood.jpg);
+  margin: 0 2rem ;
+}
+
+input, textarea, button {
+  @extend %text-normal;
+  font-size: 1em;
+
+  border: 2px solid black;
+  background-color: white;
+  padding: 2px 4px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  @extend %text-heading;
+  margin: 0;
+}
+
+h1 {
+  @extend %font-superbold;
+  font-size: 3rem;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  color: $yellow;
+  display: inline-block;
+}
+
+.room-name {
+  float: right;
+  color: $yellow;
+  margin-top: 1.5rem;
+  @extend %font-bold;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.comment {
+  font-size: 0.85rem;
+}
+
+%page {
+  background: $bgish url(/assets/img/bedge_grunge.jpg);
+  border: 2px solid #000;
+  box-shadow: 3px 4px 5px 1px rgba(0,0,0,0.6);
+}
+
+@mixin glass-button() {
+  position: relative;
+  margin: 0;
+  border-radius: 5px;
+  border: none;
+
+  @extend %text-normal;
+  line-height: 1;
+
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  box-shadow: 2px 3px 3px #666;
+
+  span {
+    background: none;
+
+    &:after {
+      background: none;
+    }
+  }
+
+  :after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    width: calc(100% - 4px);
+    height: 10%;
+    border-radius: 5px 5px 0 0;;
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.2));
+  }
+
+  &:active:not(:disabled) {
+    top: 2px;
+    box-shadow: 2px 1px 2px #666;
+  }
+
+  &:disabled {
+    box-shadow: none;
+  }
+}
+
+@mixin button-color($color) {
+  background-color: rgba(0,0,0,0);
+  color: white;
+
+  &:not(:disabled) {
+    background-image: linear-gradient($color, lighten($color, 10%));
+  }
+
+  &:hover:not(:disabled),
+  &.active:not(:disabled) {
+    background-image: linear-gradient(lighten($color,15%), lighten($color, 25%));
+  }
+
+  &:disabled {
+    border-color: darken($greyish, 10%);
+    background-image: linear-gradient($greyish, lighten($greyish, 10%));
+  }
+
+  .fa-layers-text {
+    color: $color;
+    @extend %font-bold;
+
+    &:hover .text {
+      color: lighten($blue, 15%);
+    }
+  }
+}
+
+%button {
+  @include glass-button();
+  @include button-color($blue);
+
+  &.alt {
+    @include button-color($red);
+  }
+}
+
+%interface-button {
+  font-size: 0.8rem;
+  background: $bgish;
+  color: $greyish;
+  border: 1px solid $greyish;
+  border-radius: 30px;
+
+  span {
+    width: 15px;
+    text-align: center;
+  }
+  &:hover {
+    span {}
+  }
+}
+
+.action-button {
+  @extend %button;
+}
+
+.dice-icon {
+  font-size: 1.1rem;
+}
+.dice-icon + .dice-icon {
+  margin-left: 3px;
+}
+
+.dice-icon.stacked {
+  position: relative;
+}
+
+.dice-icon .fa-layers-text {
+  font-size: 0.9rem;
+  position: absolute;
+  left: 3px;
+}
+
+.divided {
+  border-right: 2px solid white;
+  padding-right: 3px;
+
+  &:last-child {
+    border: none;
+    padding-right: 0;
+  }
+}
+
+.mini-button {
+  @extend %button;
+
+  @extend %font-bold;
+  font-size: 0.8rem;
+
+  height: 23px;
+  width: 23px;
+  padding: 2px 2px;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: center;
+
+
+  :after {
+    border-radius: 15px 15px 0 0;
+    height: 20%;
+  }
+}
+
+.add-button {
+  font-size: 0.7rem;
+}
+
+.hide {
+  display: none !important;
+}
+
+.nobr {
+  white-space:nowrap;
+}
+
+/* Forms */
+
+.game-setup-form {
+  @extend %page;
+  padding: 1rem 1.5rem;
+  display: inline-block;
+}
+
+.form-row {
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  justify-items: center;
+  align-items: center;
+
+  .content {
+    @extend %page;
+  }
+
+  &.active {
+    display: grid;
+  }
+}
+
+/* Game Board */
+
+.main-game {
+  width: 100%;
+  // display: grid;
+  // grid-template-columns: 480px auto 300px;
+  display: flex;
+}
+
+.players {
+  flex-grow: 1;
+}
+
+.player {
+  @extend %page;
+  float: left;
+  width: 220px;
+  padding: 0.5rem 0.5rem;
+  margin-right: 10px;
+
+  header {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.character {
+  position: relative;;
+
+  h2 {
+    font-size: 1.2rem;
+    @extend %font-bold;
+  }
+
+  fieldset {
+    padding: 0.25rem 0rem 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  fieldset:nth-child(1),
+  fieldset:nth-child(2) {
+    border-top: none;
+  }
+
+  .character-header{
+    text-align:right;
+  }
+
+  .action-buttons {
+    display: inline-block;
+    // top: -10px;
+    // z-index: 10;
+    border: $standardBorder;
+    margin-top: -2px;
+    padding: 0px 2px 3px;
+  }
+}
+
+.lock-button {
+  @extend %interface-button;
+
+  margin-top: 2px;
+  margin-left: -17px;
+}
+
+.expander {
+  position: relative;
+}
+.expander-button {
+  @extend %interface-button;
+  z-index: 1;
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
+}
+
+.player-card {
+  margin-bottom: 10px;
+
+  header {
+    margin-bottom: 0;
+  }
+  h2 {
+    font-size: 1rem;
+  }
+
+  .item-list {
+    font-size: 0.9rem;
+  }
+
+  .player-name {
+    font-size: 1.1rem;
+  }
+
+  .character-name,
+  .character-background {
+    font-size: 1.3rem;
+    @extend %font-bold;
+  };
+}
+
+.player.me {
+  min-width: 250px;
+  width: auto;
+
+  .character-form {
+    display: grid;
+    grid-template-columns: 225px 225px;
+  }
+
+  .character-skills, .character-special {
+    grid-column: 1 / span 2;
+  }
+
+  .character-inventory {
+    grid-row: 3 / span 2;
+  }
+}
+
+.new-character {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.character-info {
+  .field {
+    width: calc(100% - 12px);
+  }
+}
+
+.character-attributes {
+  display: flex;
+  padding: 0 0 7px;
+
+  .form-col {
+    flex-grow: 1;
+    text-align: center;
+
+
+    margin-right: 0.12rem;
+    border-right: $standardBorder;
+    padding-right: 0.12rem;
+
+    &:last-child {
+      margin-right: 0;
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+
+  .form-cell {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    @extend %font-bold;
+    font-size: 1.2rem;
+  }
+
+  .form-cell-main {
+    .field {
+      width: 36px;
+      padding: 0 0 3px;
+      height: 30px;
+      font-size: 2.2rem;
+      line-height: 1;
+      @extend %font-bold;
+    }
+  }
+
+  .form-cell-secondary {
+    label {
+      @extend %font-normal;
+      font-size: 1rem;
+    }
+
+    .field {
+      height: 20px;
+      width: 20px;
+      padding: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+      @extend %font-bold;
+    }
+  }
+
+}
+
+.warning {
+  color: red;
+  border-color: red;
+}
+
+.character-list {
+  position: relative;
+
+  .item-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .add-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  .field {
+    font-size: 0.8rem;
+    margin-right: 3px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  textarea {
+    width: calc(100% - 10px);
+    min-height: 100px;
+  }
+
+  .checkbox {
+    width: 21px;
+    height: 21px;
+
+    background-color: white;
+    color: black;
+
+    &:checked {
+      background-color: $green;
+      color: white;
+      &::after {
+        content: "\2713";
+        position: relative;
+        top: 0px;
+        left: 0px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .skill-row, .inventory-item  {
+    margin-bottom: 0.25rem;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 22px auto 28px 25px;
+  }
+
+  .skill-name {
+    flex-grow: 1;
+  }
+
+  .skill-value, .skill-total {
+    text-align: center;
+    flex-grow: 0;
+    width: 20px;
+    height: 22px;
+    font-size: 1.2rem;
+    padding: 0;
+  }
+
+  .skill-total {
+    background-color: transparent;
+    @extend %font-bold;
+  }
+
+  .inventory-item {
+    width: calc(100% - 12px);
+  }
+}
+
+.player-dice {
+  padding: 0.5rem 0 0;
+  display: flex;
+  justify-content: space-between;
+
+  .dice-result {
+    width: 40px;
+    padding: 0 0 3px;
+    height: 30px;
+    font-size: 2.2rem;
+    line-height: 1;
+    @extend %font-bold;
+    text-align: center;
+    margin-top: -2px;
+    margin-left: 1rem;
+  }
+}
+
+.drawer {
+  margin-top: 0.5rem;
+
+  border-top: $standardBorder;
+}
+
+/* Logs */
+.log-page {
+  @extend %page;
+  width: 300px;
+  height: calc(100vh - 66px);
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.log-list {
+  max-height: calc(100% - 50px);
+  overflow-y: scroll;
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    border-top: $standardBorder;
+    padding: 0.5rem 0.25rem 0.5rem 0;
+  }
+
+  .plyr-name {
+    @extend %font-bold;
+    color: $blue;
+  }
+
+  .chr-name {
+    @extend %font-bold;
+    color: $blue;
+  }
+
+  .chr-background {
+    @extend %font-bold;
+    color: $blue;
+  }
+
+  .dice {
+    @extend %font-bold;
+  }
+
+
+  /* TODO: clean up these overrides so they're not needed. That span+span stuff is problematic.*/
+  .dice-divided span:first-child {
+    border-color: black;
+    margin-right: 3px;
+  }
+
+  .datetime {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+  }
+
+  .roll-result {
+    @extend %font-bold;
+    color: $green;
+    font-size: 1.5em;
+    line-height: 1;
+    display: block;
+    border: 3px solid $green;
+    padding: 0px 0px;
+    border-radius: 35px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    margin: 0.5rem auto 0;
+  }
+}
+
+/* Notes */
+.player-notes-drawer {
+  font-size: 0.8rem;
+}
+
+.player-notes {
+  width: 440px;
+  height: 150px;
+  font-size: 0.8rem;
+}

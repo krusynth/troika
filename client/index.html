@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Troika</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <base href="/">
+
+  <!--script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/8.0.0/cash.min.js"></script>
+  <script src="https://kit.fontawesome.com/e833fef2c3.js" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/vendors/angular.min.js"></script>
+  <script src="/vendors/angular-sanitize.min.js"></script>
+  <script src="/vendors/angular-ui-router.min.js"></script>
+  <script src="/vendors/angular-animate.min.js"></script>
+  <script src="/game.js"  type="module"></script>
+</head>
+
+<body ng-app="gameClient">
+  <header>
+    <h1>Troika!</h1>
+    <span class="room-name" id="room-name" ng-if="roomId">Room: {{roomId}}</span>
+  </header>
+  <div id="game-board" class="game-board">
+    <ui-view>
+      <div class="loading" id="loading"><span class="loading-message pulse">Loading...</span></div>
+    </ui-view>
+  </div>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID.
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+   -->
+
+</body>
+
+</html>

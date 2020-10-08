@@ -1,0 +1,49 @@
+$main-font: 'Alegreya'; //Josefin Slab
+$main-font-stack: $main-font, serif;
+// $accent-font: 'Alegreya';
+// $accent-font-stack: $accent-font, serif;
+$code-font: monospace;
+
+@include web-fonts(
+ // ($accent-font: (400,800)),
+ ($main-font: ("400", "400 italic", 600, 800))
+);
+
+%font-normal {
+  font-weight: 400;
+}
+
+%font-bold {
+  font-weight: 600;
+}
+
+%font-superbold {
+  font-weight: 800;
+}
+
+%text-normal {
+  font-family: $main-font-stack;
+  @extend %font-normal;
+}
+
+%text-heading {
+  font-family: $main-font-stack;
+  @extend %font-bold;
+}
+
+%text-title {
+  font-family: $main-font-stack;
+  @extend %font-superbold;
+}
+
+
+$standardBorder: 2px groove ThreeDFace;
+
+$yellow: #f2e2ae;
+$gold: #ffc400;
+$blue: #00538f;
+$green: #01573e;
+$red: #6b0f0f;
+$ivory: #faf5eb;
+$greyish: #666633;
+$bgish: #e5dcd3;

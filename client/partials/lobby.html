@@ -1,0 +1,19 @@
+<form class="form game-setup-form" id="game-setup-form"
+  ng-model-options="{ updateOn: 'blur'}"
+  ng-class="{hide: !ready}"
+>
+  <div class="form-row name-field">
+    <p>First, tell us <em>your</em> name.</p>
+    <a id="player-icon" class="player-icon fas fa-user" title="click to change color"></a>
+    <input placeholder="Player Name" type="text" id="player-name" ng-model="$ctrl.gamestate.player.name"/>
+    <p class="comment">(You'll tell us your character's name later.)</p>
+  </div>
+  <div class="form-row type-field">
+    <p>Next, do you want to</p>
+    Start a <button class="action-button game-type-button" id="new-game" ng-disabled="!$ctrl.gamestate.player.name.length" ng-click="$ctrl.createGame()"><span>New Game</span></button>
+    <span class="or">or</span>
+    <label for="game-id">Join a Game</label>
+    <input type="text" class="game-id-field" id="game-id" placeholder="Room Name" ng-model="$ctrl.gamestate.gameId"/>
+    <button class="action-button" id="join-game" ng-disabled="!$ctrl.gamestate.gameId.length || !$ctrl.gamestate.player.name.length" ng-click="$ctrl.joinGame()"><span>Go</span></button>
+  </div>
+</form>

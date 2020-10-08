@@ -1,0 +1,31 @@
+{
+  "name": "troika-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node ./server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./client/assets/scss/:./client/assets/css/",
+    "sequelize": "node node_modules/.bin/sequelize"
+  },
+  "author": "krusynth",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
+    "session-file-store": "^1.4.0",
+    "socket.io": "^2.3.0",
+    "uuid4": "^2.0.2"
+  },
+  "devDependencies": {
+    "@uirouter/angularjs": "^1.0.28",
+    "angular": "1.8.0",
+    "angular-sanitize": "^1.8.0",
+    "sass": "^1.26.10"
+  }
+}

@@ -1,0 +1,85 @@
+<article class="player player-card" ng-repeat="(key, player) in players track by key">
+  <header>
+    <div class="form-row">
+      <h2 class="player-name" id="player-name">{{player.player.name}}</h2>
+    </div>
+  </header>
+  <section class="character-list">
+    <div id="characters">
+      <article class="character character-card">
+        <fieldset class="form-row character-info">
+          <div class="form-row">
+            <span id="character-name" class="character-name">{{player.character.name}}</span>
+            <span class="the">the</span>
+            <span id="character-background" class="character-background">{{player.character.background}}</span>
+          </div>
+        </fieldset>
+        <fieldset class="form-row character-attributes">
+          <div class="form-col form-skill">
+            <label for="character-skill">Skill</label>
+            <div class="form-cell form-cell-main">
+              <span title="Skill" class="field" id="character-skill">{{player.character.skill}}</span>
+            </div>
+          </div>
+          <div class="form-col form-stamina">
+            <label for="character-stamina">Stamina</label>
+            <div class="form-cell form-cell-main">
+              <span title="Current Stamina" class="field" id="character-stamina">{{player.character.stamina}}</span>
+            </div>
+            <div class="form-cell form-cell-secondary">
+              /<span title="Max Stamina" class="field" id="character-stamina-max">{{player.character.staminaMax}}</span>
+            </div>
+          </div>
+          <div class="form-col form-luck">
+            <label for="character-luck">Luck</label>
+            <div class="form-cell form-cell-main">
+              <span title="Current Luck" class="field" id="character-luck">{{player.character.luck}}</span>
+            </div>
+            <div class="form-cell form-cell-secondary">
+              /<span title="Max Luck" class="field" id="character-luck-max">{{player.character.luckMax}}</span>
+            </div>
+          </div>
+        </fieldset>
+        <div class="expander">
+          <button class="expander-button" ng-click="player.show = !player.show">
+            <span class="fa-window-maximize" ng-class="{fas: !player.show, far: player.show}"></span>
+          </button>
+        </div>
+        <div ng-hide="!player.show">
+          <fieldset class="form-row character-skills character-list">
+            <h2>Skills</h2>
+            <ul class="item-list skill-list" id="skill-list">
+              <li ng-repeat="item in player.character.skills">
+                {{item.name}}: {{item.value}} ({{item.value + player.character.skill}});
+              </li>
+            </ul>
+          </fieldset>
+          <fieldset class="form-row character-weapons character-list">
+            <h2>Wielding</h2>
+            <ul class="item-list weapon-list" id="weapon-list">
+              <li ng-repeat="item in player.character.weapons">
+                {{item}}
+              </li>
+            </ul>
+          </fieldset>
+          <fieldset class="form-row character-armor character-list">
+            <h2>Wearing</h2>
+            <ul class="item-list armor-list" id="armor-list">
+              <li ng-repeat="item in player.character.armor">
+                {{item}}
+              </li>
+            </ul>
+          </fieldset>
+          <fieldset class="form-row character-inventory character-list">
+            <h2>Inventory</h2>
+            <ul class="item-list inventory-list" id="inventory-list">
+              <li ng-repeat="item in player.character.inventory">
+                {{item}}
+              </li>
+            </ul>
+          </fieldset>
+        </div>
+      </article>
+    </div>
+  </section>
+</article>

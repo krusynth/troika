@@ -1,0 +1,567 @@
+@charset "UTF-8";
+/*
+ * main.scss
+ */
+@import url("//fonts.googleapis.com/css?family=Alegreya:400,400italic,600,800");
+input, button, textarea {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  text-align: inherit;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+input::-moz-focus-inner, button::-moz-focus-inner, textarea::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.character-attributes .form-cell-secondary label, .mini-button, .action-button, input, textarea, button, body {
+  font-weight: 400;
+}
+
+.log-list .roll-result, .log-list .dice, .log-list .chr-background, .log-list .chr-name, .log-list .plyr-name, .player-dice .dice-result, .character-list .skill-total, .character-attributes .form-cell-secondary .field, .character-attributes .form-cell-main .field, .character-attributes label, .player-card .character-name,
+.player-card .character-background, .character h2, .mini-button, .alt.mini-button .fa-layers-text, .alt.action-button .fa-layers-text, .mini-button .fa-layers-text, .action-button .fa-layers-text, .room-name, h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+h1 {
+  font-weight: 800;
+}
+
+.mini-button, .action-button, input, textarea, button, body {
+  font-family: "Alegreya", serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Alegreya", serif;
+}
+
+body {
+  font-size: 1.1rem;
+  background: url(/assets/img/myfreetextures-wood.jpg);
+  margin: 0 2rem;
+}
+
+input, textarea, button {
+  font-size: 1em;
+  border: 2px solid black;
+  background-color: white;
+  padding: 2px 4px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  color: #f2e2ae;
+  display: inline-block;
+}
+
+.room-name {
+  float: right;
+  color: #f2e2ae;
+  margin-top: 1.5rem;
+}
+.room-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.comment {
+  font-size: 0.85rem;
+}
+
+.log-page, .player, .modal .content, .game-setup-form {
+  background: #e5dcd3 url(/assets/img/bedge_grunge.jpg);
+  border: 2px solid #000;
+  box-shadow: 3px 4px 5px 1px rgba(0, 0, 0, 0.6);
+}
+
+.mini-button, .action-button {
+  position: relative;
+  margin: 0;
+  border-radius: 5px;
+  border: none;
+  line-height: 1;
+  display: inline-block;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  box-shadow: 2px 3px 3px #666;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+}
+.mini-button span, .action-button span {
+  background: none;
+}
+.mini-button span:after, .action-button span:after {
+  background: none;
+}
+.mini-button :after, .action-button :after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 10%;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+}
+.mini-button:active:not(:disabled), .action-button:active:not(:disabled) {
+  top: 2px;
+  box-shadow: 2px 1px 2px #666;
+}
+.mini-button:disabled, .action-button:disabled {
+  box-shadow: none;
+}
+.mini-button:not(:disabled), .action-button:not(:disabled) {
+  background-image: linear-gradient(#00538f, #0071c2);
+}
+.mini-button:hover:not(:disabled), .action-button:hover:not(:disabled), .active.mini-button:not(:disabled), .active.action-button:not(:disabled) {
+  background-image: linear-gradient(#007fdc, #109bff);
+}
+.mini-button:disabled, .action-button:disabled {
+  border-color: #444422;
+  background-image: linear-gradient(#666633, #888844);
+}
+.mini-button .fa-layers-text, .action-button .fa-layers-text {
+  color: #00538f;
+}
+.mini-button .fa-layers-text:hover .text, .action-button .fa-layers-text:hover .text {
+  color: #007fdc;
+}
+.alt.mini-button, .alt.action-button {
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+}
+.alt.mini-button:not(:disabled), .alt.action-button:not(:disabled) {
+  background-image: linear-gradient(#6b0f0f, #981515);
+}
+.alt.mini-button:hover:not(:disabled), .alt.action-button:hover:not(:disabled), .alt.active.mini-button:not(:disabled), .alt.active.action-button:not(:disabled) {
+  background-image: linear-gradient(#ae1818, #db1f1f);
+}
+.alt.mini-button:disabled, .alt.action-button:disabled {
+  border-color: #444422;
+  background-image: linear-gradient(#666633, #888844);
+}
+.alt.mini-button .fa-layers-text, .alt.action-button .fa-layers-text {
+  color: #6b0f0f;
+}
+.alt.mini-button .fa-layers-text:hover .text, .alt.action-button .fa-layers-text:hover .text {
+  color: #007fdc;
+}
+
+.expander-button, .lock-button {
+  font-size: 0.8rem;
+  background: #e5dcd3;
+  color: #666633;
+  border: 1px solid #666633;
+  border-radius: 30px;
+}
+.expander-button span, .lock-button span {
+  width: 15px;
+  text-align: center;
+}
+.dice-icon {
+  font-size: 1.1rem;
+}
+
+.dice-icon + .dice-icon {
+  margin-left: 3px;
+}
+
+.dice-icon.stacked {
+  position: relative;
+}
+
+.dice-icon .fa-layers-text {
+  font-size: 0.9rem;
+  position: absolute;
+  left: 3px;
+}
+
+.divided {
+  border-right: 2px solid white;
+  padding-right: 3px;
+}
+.divided:last-child {
+  border: none;
+  padding-right: 0;
+}
+
+.mini-button {
+  font-size: 0.8rem;
+  height: 23px;
+  width: 23px;
+  padding: 2px 2px;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: center;
+}
+.mini-button :after {
+  border-radius: 15px 15px 0 0;
+  height: 20%;
+}
+
+.add-button {
+  font-size: 0.7rem;
+}
+
+.hide {
+  display: none !important;
+}
+
+.nobr {
+  white-space: nowrap;
+}
+
+/* Forms */
+.game-setup-form {
+  padding: 1rem 1.5rem;
+  display: inline-block;
+}
+
+.form-row {
+  margin-bottom: 0.5rem;
+}
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-items: center;
+  align-items: center;
+}
+.modal.active {
+  display: grid;
+}
+
+/* Game Board */
+.main-game {
+  width: 100%;
+  display: flex;
+}
+
+.players {
+  flex-grow: 1;
+}
+
+.player {
+  float: left;
+  width: 220px;
+  padding: 0.5rem 0.5rem;
+  margin-right: 10px;
+}
+.player header {
+  margin-bottom: 0.5rem;
+}
+
+.character {
+  position: relative;
+}
+.character h2 {
+  font-size: 1.2rem;
+}
+.character fieldset {
+  padding: 0.25rem 0rem 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+.character fieldset:nth-child(1),
+.character fieldset:nth-child(2) {
+  border-top: none;
+}
+.character .character-header {
+  text-align: right;
+}
+.character .action-buttons {
+  display: inline-block;
+  border: 2px groove ThreeDFace;
+  margin-top: -2px;
+  padding: 0px 2px 3px;
+}
+
+.lock-button {
+  margin-top: 2px;
+  margin-left: -17px;
+}
+
+.expander {
+  position: relative;
+}
+
+.expander-button {
+  z-index: 1;
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
+}
+
+.player-card {
+  margin-bottom: 10px;
+}
+.player-card header {
+  margin-bottom: 0;
+}
+.player-card h2 {
+  font-size: 1rem;
+}
+.player-card .item-list {
+  font-size: 0.9rem;
+}
+.player-card .player-name {
+  font-size: 1.1rem;
+}
+.player-card .character-name,
+.player-card .character-background {
+  font-size: 1.3rem;
+}
+
+.player.me {
+  min-width: 250px;
+  width: auto;
+}
+.player.me .character-form {
+  display: grid;
+  grid-template-columns: 225px 225px;
+}
+.player.me .character-skills, .player.me .character-special {
+  grid-column: 1/span 2;
+}
+.player.me .character-inventory {
+  grid-row: 3/span 2;
+}
+
+.new-character {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.character-info .field {
+  width: calc(100% - 12px);
+}
+
+.character-attributes {
+  display: flex;
+  padding: 0 0 7px;
+}
+.character-attributes .form-col {
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 0.12rem;
+  border-right: 2px groove ThreeDFace;
+  padding-right: 0.12rem;
+}
+.character-attributes .form-col:last-child {
+  margin-right: 0;
+  padding-right: 0;
+  border-right: none;
+}
+.character-attributes .form-cell {
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+}
+.character-attributes label {
+  display: block;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.character-attributes .form-cell-main .field {
+  width: 36px;
+  padding: 0 0 3px;
+  height: 30px;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.character-attributes .form-cell-secondary label {
+  font-size: 1rem;
+}
+.character-attributes .form-cell-secondary .field {
+  height: 20px;
+  width: 20px;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.warning {
+  color: red;
+  border-color: red;
+}
+
+.character-list {
+  position: relative;
+}
+.character-list .item-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.character-list .add-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.character-list .field {
+  font-size: 0.8rem;
+  margin-right: 3px;
+}
+.character-list .field:last-child {
+  margin-right: 0;
+}
+.character-list textarea {
+  width: calc(100% - 10px);
+  min-height: 100px;
+}
+.character-list .checkbox {
+  width: 21px;
+  height: 21px;
+  background-color: white;
+  color: black;
+}
+.character-list .checkbox:checked {
+  background-color: #01573e;
+  color: white;
+}
+.character-list .checkbox:checked::after {
+  content: "✓";
+  position: relative;
+  top: 0px;
+  left: 0px;
+  font-size: 1rem;
+}
+.character-list .skill-row, .character-list .inventory-item {
+  margin-bottom: 0.25rem;
+}
+.character-list .skill-row {
+  display: grid;
+  grid-template-columns: 22px auto 28px 25px;
+}
+.character-list .skill-name {
+  flex-grow: 1;
+}
+.character-list .skill-value, .character-list .skill-total {
+  text-align: center;
+  flex-grow: 0;
+  width: 20px;
+  height: 22px;
+  font-size: 1.2rem;
+  padding: 0;
+}
+.character-list .skill-total {
+  background-color: transparent;
+}
+.character-list .inventory-item {
+  width: calc(100% - 12px);
+}
+
+.player-dice {
+  padding: 0.5rem 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+.player-dice .dice-result {
+  width: 40px;
+  padding: 0 0 3px;
+  height: 30px;
+  font-size: 2.2rem;
+  line-height: 1;
+  text-align: center;
+  margin-top: -2px;
+  margin-left: 1rem;
+}
+
+.drawer {
+  margin-top: 0.5rem;
+  border-top: 2px groove ThreeDFace;
+}
+
+/* Logs */
+.log-page {
+  width: 300px;
+  height: calc(100vh - 66px);
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.log-list {
+  max-height: calc(100% - 50px);
+  overflow-y: scroll;
+  list-style: none;
+  padding-left: 0;
+  /* TODO: clean up these overrides so they're not needed. That span+span stuff is problematic.*/
+}
+.log-list li {
+  border-top: 2px groove ThreeDFace;
+  padding: 0.5rem 0.25rem 0.5rem 0;
+}
+.log-list .plyr-name {
+  color: #00538f;
+}
+.log-list .chr-name {
+  color: #00538f;
+}
+.log-list .chr-background {
+  color: #00538f;
+}
+.log-list .dice-divided span:first-child {
+  border-color: black;
+  margin-right: 3px;
+}
+.log-list .datetime {
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+}
+.log-list .roll-result {
+  color: #01573e;
+  font-size: 1.5em;
+  line-height: 1;
+  display: block;
+  border: 3px solid #01573e;
+  padding: 0px 0px;
+  border-radius: 35px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin: 0.5rem auto 0;
+}
+
+/* Notes */
+.player-notes-drawer {
+  font-size: 0.8rem;
+}
+
+.player-notes {
+  width: 440px;
+  height: 150px;
+  font-size: 0.8rem;
+}
+
+/*# sourceMappingURL=main.css.map */
