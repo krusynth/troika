@@ -1,5 +1,4 @@
 const uuid4 = require('uuid4');
-const staticData = require('../../data.json');
 const { Background, Room } = require('../models');
 const Dice = require('../lib/Dice.js');
 
