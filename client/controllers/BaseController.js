@@ -54,8 +54,8 @@ console.log('gamestate data sending', this.gamestate.data);
   }
 
   createGame() {
-    return this.socket.send('newGame', this.gamestate.data).then(room => {
-      this.$state.go('room', {room: room.name});
+    return this.socket.send('newGame', this.gamestate.data).then(data => {
+      this.$state.go('room', {roomId: data.room.name});
     });
   }
 
