@@ -15,6 +15,6 @@ export default function controllerFactory(controller) {
   });
 
   gameClient.controller(controller.name,
-    ['$rootScope', '$scope', '$http', '$state', '$sce', 'SocketService', controller]
+    ['$rootScope', '$scope', '$http', '$state', '$document', '$sce', 'SocketService', controller]
   );
 }

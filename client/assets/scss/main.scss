@@ -64,6 +64,7 @@ h1 {
   margin: 0;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
 
   @extend %text-normal;
   line-height: 1;
@@ -140,11 +141,20 @@ h1 {
   }
 }
 
-%interface-button {
+%interface-widget {
   font-size: 0.8rem;
   background: $bgish;
   color: $greyish;
   border: 1px solid $greyish;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($bgish, 5%);
+  }
+}
+
+%interface-button {
+  @extend %interface-widget;
   border-radius: 30px;
 
   span {
@@ -332,6 +342,12 @@ h1 {
   bottom: -20px;
 }
 
+.party-heading {
+  @extend %page;
+  padding: 0.5rem 0.5rem;
+  margin-right: 10px;
+}
+
 .player-card {
   margin-bottom: 10px;
 
@@ -509,7 +525,7 @@ h1 {
 
   .skill-row {
     display: grid;
-    grid-template-columns: 22px auto 28px 25px;
+    grid-template-columns: 22px auto 28px 28px 5px;
   }
 
   .skill-name {
@@ -528,10 +544,62 @@ h1 {
   .skill-total {
     background-color: transparent;
     @extend %font-bold;
+    margin-right: 5px;
   }
 
   .inventory-item {
-    width: calc(100% - 12px);
+    width: calc(100% - 28px);
+    margin-right: 0;
+  }
+}
+
+.item-actions-button {
+  @extend %interface-widget;
+
+  span {
+    margin: 0 -2px;
+  }
+}
+
+.inventory-row {
+  position: relative;
+}
+
+.item-context {
+  position: absolute;
+  top: 25px;
+  right: 1px;
+  z-index: 1;
+  background: $bgish;
+  border: 2px solid black;
+  box-shadow: 2px 3px 7px 3px #666;
+
+  ul {
+    list-style: none;
+    height: 17px;
+    overflow: hidden;
+    padding: 2px 2px 3px;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  .item-action {
+    @extend %interface-button;
+
+    width: 17px;
+    height: 17px;
+
+    span {
+      position: relative;
+      top: -4px;
+      left: -4px;
+    }
+
+    .fa-caret-up, .fa-caret-down {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -598,11 +666,8 @@ h1 {
     @extend %font-bold;
   }
 
-
-  /* TODO: clean up these overrides so they're not needed. That span+span stuff is problematic.*/
-  .dice-divided span:first-child {
+  .divided:first-child {
     border-color: black;
-    margin-right: 3px;
   }
 
   .datetime {

@@ -4,17 +4,26 @@
       <header>
         <form class="form player-form">
           <div class="form-row">
-            <input type="text" class="field" id="player-name" placeholder="Player Name" ng-model="$ctrl.gamestate.player.name"/>
+            <input type="text" class="field" id="player-name" placeholder="Player Name" ng-model="gamestate.player.name"/>
           </div>
         </form>
       </header>
 
       <secton class="action-buttons">
-        <button id="new-character" class="drawer-toggler action-button new-character" title="New Character" data-drawer="character" ng-click="$ctrl.toggleDrawer('character')" ng-class="{active: $ctrl.drawers.character}"><span class="fas fa-user"></span></button>
+        <button class="drawer-toggler action-button new-character" title="New Character"
+          ng-click="$ctrl.toggleDrawer('character')" ng-class="{active: $ctrl.drawers.character}">
+          <span class="fas fa-user"></span>
+        </button>
 
-        <button id="show-dice-drawer" class="drawer-toggler action-button show-dice-drawer" title="Open Dice Drawer" data-drawer="dice" ng-click="$ctrl.toggleDrawer('dice')" ng-class="{active: $ctrl.drawers.dice}"><span class="fas fa-dice-six dice-icon"></span></button>
+        <button class="drawer-toggler action-button show-dice-drawer" title="Open Dice Drawer"
+          ng-click="$ctrl.toggleDrawer('dice')" ng-class="{active: $ctrl.drawers.dice}">
+          <span class="fas fa-dice-six dice-icon"></span>
+        </button>
 
-        <button id="show-notes-drawer" class="drawer-toggler action-button show-notes-drawer" title="Open Notes Drawer" data-drawer="notes" ng-click="$ctrl.toggleDrawer('notes')" ng-class="{active: $ctrl.drawers.notes}"><span class="fas fa-pen-nib"></span></button>
+        <button class="drawer-toggler action-button show-notes-drawer" title="Open Notes Drawer"
+          ng-click="$ctrl.toggleDrawer('notes')" ng-class="{active: $ctrl.drawers.notes}">
+          <span class="fas fa-pen-nib"></span>
+        </button>
       </secton>
 
       <dice-drawer parent="$ctrl"></dice-drawer>
@@ -22,7 +31,7 @@
       <section class="player-notes-drawer drawer" id="player-notes-drawer" ng-hide="!$ctrl.drawers.notes">
         <h2>My Notes</h2>
         <div class="form-row">
-          <textarea id="player-notes" data-autosave="true" class="player-notes field" ng-model="$ctrl.gamestate.character.notes"></textarea>
+          <textarea id="player-notes" data-autosave="true" class="player-notes field" ng-model="gamestate.character.notes"></textarea>
         </div>
       </section>
 

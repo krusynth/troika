@@ -1,3 +1,4 @@
+import dupe from '../lib/dupe.js';
 import BaseController from './BaseController.js';
 import controllerFactory from '../lib/controllerFactory.js';
 
@@ -15,9 +16,9 @@ export default class RoomController extends BaseController {
   messages = [];
 
   // Angular's internals appear to require an explicit constructor.
-  constructor($rootScope, $scope, $http, $state, $sce, SocketService) {
+  constructor($rootScope, $scope, $http, $state, $document, $sce, SocketService) {
     $rootScope.roomId = $state.params.roomId;
-    super($rootScope, $scope, $http, $state, $sce, SocketService);
+    super($rootScope, $scope, $http, $state, $document, $sce, SocketService);
 
     this.$scope.content = {
       messages: []
@@ -28,8 +29,8 @@ export default class RoomController extends BaseController {
     }
 
     this.$scope.staminaWarning = () => {
-      if(this.gamestate && this.gamestate.character && this.gamestate.character.stamina !== null) {
-        return (this.gamestate.character.stamina <= 4)
+      if(this.$scope.gamestate && this.$scope.gamestate.character && this.$scope.gamestate.character.stamina !== null) {
+        return (this.$scope.gamestate.character.stamina <= 4)
       }
       else {
         return false;
@@ -38,16 +39,16 @@ export default class RoomController extends BaseController {
   }
 
   save() {
-    console.log('RoomController.save', this.gamestate.data);
+    console.log('RoomController.save', this.$scope.gamestate.data);
   }
 
   init() {
     super.init()
     .then(() => this.joinGame() )
-    .then(room => {
-      console.log('init room', room);
-      if(room) {
-        this.updateRoom(room, 'initRoom');
+    .then(data => {
+      console.log('init room', data);
+      if(data) {
+        this.updateRoom(data);
 
         this.attachListeners();
       }
@@ -58,6 +59,7 @@ export default class RoomController extends BaseController {
     this.socket.listen('roll', data => this.handleRoll(data));
     this.socket.listen('playerJoined', data => this.updateRoom(data));
     this.socket.listen('playerUpdated', data => this.updateRoom(data));
+    this.$document.on('click', e => this.clearContextMenus());
   }
 
   updateRoom(data) {
@@ -71,12 +73,12 @@ export default class RoomController extends BaseController {
   }
 
   loadMe(room) {
-    let me = room.players[this.gamestate.player.sessionId];
+    let me = room.players[this.$scope.gamestate.player.sessionId];
 
     if(me && me.character) {
-      this.gamestate.loadCharacter(me.character);
+      this.$scope.gamestate.loadCharacter(me.character);
 
-      if(this.gamestate.character.name) {
+      if(this.$scope.gamestate.character.name) {
         this.drawers.character = true;
       }
     }
@@ -86,22 +88,22 @@ export default class RoomController extends BaseController {
     // Compare players as we go.
     let oldPlayers = false;
     if(this.$scope.players) {
-      oldPlayers = JSON.parse(JSON.stringify(this.$scope.players));
+      oldPlayers = dupe(this.$scope.players);
     }
 
     this.$scope.players = {};
     let keys = Object.keys(room.players);
     for(let i = 0; i < keys.length; i++) {
       let key = keys[i];
-      let player = JSON.parse(JSON.stringify(room.players[key]));
+      let player = dupe(room.players[key]);
       player.show = false;
       console.log('loadPlayer', keys[i], player);
 
       // Don't do anything about me.
       if(
-        this.gamestate.character &&
-        this.gamestate.character.name &&
-        keys[i] === this.gamestate.player.sessionId
+        this.$scope.gamestate.character &&
+        this.$scope.gamestate.character.name &&
+        keys[i] === this.$scope.gamestate.player.sessionId
       ) {
         continue;
       }
@@ -118,7 +120,7 @@ export default class RoomController extends BaseController {
       case 'playerJoined':
       console.log('playerJoined', data.player, this.$scope.players[data.player]);
         if(
-          data.player !== this.gamestate.player.sessionId &&
+          data.player !== this.$scope.gamestate.player.sessionId &&
           !this.$scope.players[data.player] &&
           data.room.players[data.player].player &&
           data.room.players[data.player].player.name
@@ -129,13 +131,12 @@ export default class RoomController extends BaseController {
             datetime: data.datetime
           };
           this.$scope.content.messages.unshift(msg);
-
-          console.log('add message', msg);
         }
         break;
 
       case 'playerUpdated':
-        if(data.player !== this.gamestate.player.sessionId) {
+        if(data.player !== this.$scope.gamestate.player.sessionId) {
+          // We only message if there's been a change in name or background.
           let oldName = '';
           let oldBg = '';
           if(this.$scope.players[data.player] && this.$scope.players[data.player].character) {
@@ -158,8 +159,6 @@ export default class RoomController extends BaseController {
               datetime: data.datetime
             };
             this.$scope.content.messages.unshift(msg);
-
-            console.log('add message', msg);
           }
         }
         break;
@@ -184,17 +183,17 @@ export default class RoomController extends BaseController {
   /* Todo: move to separate controller. */
 
   clearCharacter() {
-    this.gamestate.newCharacter();
-    this.gamestate.save();
+    this.$scope.gamestate.newCharacter();
+    this.$scope.gamestate.save();
   }
 
   randomCharacter() {
     this.socket.send('randomCharacter', {}).then(chr => {
       console.log('random chr', chr);
-      this.gamestate.loadCharacter(this.processCharacter(chr));
+      this.$scope.gamestate.loadCharacter(this.processCharacter(chr));
       this.$scope.$apply();
 
-      console.log('random chr processed', this.gamestate.character.data);
+      console.log('random chr processed', this.$scope.gamestate.character.data);
     });
   }
 
@@ -205,10 +204,10 @@ export default class RoomController extends BaseController {
         if(chr) {
           console.log('found chr', chr);
 
-          this.gamestate.loadCharacter(this.processCharacter(chr));
+          this.$scope.gamestate.loadCharacter(this.processCharacter(chr));
           this.$scope.$apply();
 
-          console.log('find chr processed', this.gamestate.character.data);
+          console.log('find chr processed', this.$scope.gamestate.character.data);
         }
         else {
           alert('Background not found, please try a more specific term.');
@@ -228,6 +227,17 @@ export default class RoomController extends BaseController {
     }
 
     return chr;
+  }
+
+  showItemContext(e) {
+    e.stopPropagation();
+    $('.context-menu').addClass('hide');
+    $(e.currentTarget).parent().find('.context-menu').removeClass('hide');
+  }
+
+  clearContextMenus(e) {
+    // e.stopPropagation();
+    $('.context-menu').addClass('hide');
   }
 }
 

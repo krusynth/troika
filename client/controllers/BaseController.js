@@ -9,11 +9,12 @@ export default class BaseController {
   player = {};
   character = {};
 
-  constructor ($rootScope, $scope, $http, $state, $sce, SocketService) {
+  constructor ($rootScope, $scope, $http, $state, $document, $sce, SocketService) {
     this.$rootScope = $rootScope;
     this.$scope = $scope;
     this.$http = $http;
     this.$state = $state;
+    this.$document = $document;
     this.$sce = $sce;
     this.socket = SocketService;
     this.$scope.ready = false;
@@ -30,15 +31,15 @@ export default class BaseController {
   init() {
     return this.socket.connect()
     .then(() => {
-      this.gamestate = new GameState({
+      this.$scope.gamestate = new GameState({
         socket: this.socket,
         gameId: this.$state.params.roomId
       });
-console.log('gamestate data sending', this.gamestate.data);
-      return this.socket.send('init', this.gamestate.data)
+console.log('gamestate data sending', this.$scope.gamestate.data);
+      return this.socket.send('init', this.$scope.gamestate.data)
     })
     .then(result => {
-      this.gamestate.player.sessionId = result.sessionId;
+      this.$scope.gamestate.player.sessionId = result.sessionId;
 
       this.$scope.ready = true;
       this.$scope.$apply();
@@ -47,20 +48,21 @@ console.log('gamestate data sending', this.gamestate.data);
 
   send(name, data) {
     if(!data) { data = {}; }
-    let req = Object.assign(data, this.gamestate.data);
+    let req = Object.assign(data, this.$scope.gamestate.data);
 
     console.log('socket.send', data, req);
     return this.socket.send(name, data);
   }
 
   createGame() {
-    return this.socket.send('newGame', this.gamestate.data).then(data => {
+    return this.socket.send('newGame', this.$scope.gamestate.data).then(data => {
       this.$state.go('room', {roomId: data.room.name});
     });
   }
 
   joinGame() {
-    return this.socket.send('joinGame', this.gamestate.data).then(room => {
+    return this.socket.send('joinGame', this.$scope.gamestate.data).then(data => {
+      let room = data.room;
       console.log('joinGame room', room);
       if(room) {
         if(this.$state.current.name !== 'room') {
@@ -76,7 +78,7 @@ console.log('gamestate data sending', this.gamestate.data);
         }
       }
 
-      return room;
+      return data;
     });
   }
 }

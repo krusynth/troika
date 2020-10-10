@@ -1,3 +1,4 @@
+import './lib/arrayMove.js';
 import './tags/DieIcon.js';
 
 import gameClient from './lib/GameClient.js';

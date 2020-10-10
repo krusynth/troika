@@ -22,12 +22,12 @@ export default class GameState {
     };
 
     // Remove blanks.
-    if(data.character) {
-      data.character.inventory = data.character.inventory.filter(elm => elm);
-      data.character.weapons = data.character.weapons.filter(elm => elm);
-      data.character.armor = data.character.armor.filter(elm => elm);
-      data.character.skills = data.character.skills.filter(elm => !!elm.name ? elm : false);
-    }
+    // if(data.character) {
+    //   data.character.inventory = data.character.inventory.filter(elm => elm);
+    //   data.character.weapons = data.character.weapons.filter(elm => elm);
+    //   data.character.armor = data.character.armor.filter(elm => elm);
+    //   data.character.skills = data.character.skills.filter(elm => !!elm.name ? elm : false);
+    // }
 
     return data;
   }

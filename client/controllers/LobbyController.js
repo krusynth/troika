@@ -7,8 +7,8 @@ export default class LobbyController extends BaseController {
   static url = '/';
 
   // Angular's internals appear to require an explicit constructor.
-  constructor($rootScope, $scope, $http, $state, $sce, SocketService) {
-    super($rootScope, $scope, $http, $state, $sce, SocketService);
+  constructor($rootScope, $scope, $http, $state, $document, $sce, SocketService) {
+    super($rootScope, $scope, $http, $state, $document, $sce, SocketService);
   }
 }
 

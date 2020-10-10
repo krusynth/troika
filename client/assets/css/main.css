@@ -88,7 +88,7 @@ h1 {
   font-size: 0.85rem;
 }
 
-.log-page, .player, .modal .content, .game-setup-form {
+.log-page, .party-heading, .player, .modal .content, .game-setup-form {
   background: #e5dcd3 url(/assets/img/bedge_grunge.jpg);
   border: 2px solid #000;
   box-shadow: 3px 4px 5px 1px rgba(0, 0, 0, 0.6);
@@ -99,6 +99,7 @@ h1 {
   margin: 0;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
   line-height: 1;
   display: inline-block;
   border: 2px solid black;
@@ -168,14 +169,21 @@ h1 {
   color: #007fdc;
 }
 
-.expander-button, .lock-button {
+.item-actions-button, .item-context .item-action, .expander-button, .lock-button {
   font-size: 0.8rem;
   background: #e5dcd3;
   color: #666633;
   border: 1px solid #666633;
+  cursor: pointer;
+}
+.item-actions-button:hover, .item-context .item-action:hover, .expander-button:hover, .lock-button:hover {
+  background-color: #eee9e3;
+}
+
+.item-context .item-action, .expander-button, .lock-button {
   border-radius: 30px;
 }
-.expander-button span, .lock-button span {
+.item-context .item-action span, .expander-button span, .lock-button span {
   width: 15px;
   text-align: center;
 }
@@ -321,6 +329,11 @@ h1 {
   bottom: -20px;
 }
 
+.party-heading {
+  padding: 0.5rem 0.5rem;
+  margin-right: 10px;
+}
+
 .player-card {
   margin-bottom: 10px;
 }
@@ -461,7 +474,7 @@ h1 {
 }
 .character-list .skill-row {
   display: grid;
-  grid-template-columns: 22px auto 28px 25px;
+  grid-template-columns: 22px auto 28px 28px 5px;
 }
 .character-list .skill-name {
   flex-grow: 1;
@@ -476,9 +489,50 @@ h1 {
 }
 .character-list .skill-total {
   background-color: transparent;
+  margin-right: 5px;
 }
 .character-list .inventory-item {
-  width: calc(100% - 12px);
+  width: calc(100% - 28px);
+  margin-right: 0;
+}
+
+.item-actions-button span {
+  margin: 0 -2px;
+}
+
+.inventory-row {
+  position: relative;
+}
+
+.item-context {
+  position: absolute;
+  top: 25px;
+  right: 1px;
+  z-index: 1;
+  background: #e5dcd3;
+  border: 2px solid black;
+  box-shadow: 2px 3px 7px 3px #666;
+}
+.item-context ul {
+  list-style: none;
+  height: 17px;
+  overflow: hidden;
+  padding: 2px 2px 3px;
+}
+.item-context li {
+  display: inline-block;
+}
+.item-context .item-action {
+  width: 17px;
+  height: 17px;
+}
+.item-context .item-action span {
+  position: relative;
+  top: -4px;
+  left: -4px;
+}
+.item-context .item-action .fa-caret-up, .item-context .item-action .fa-caret-down {
+  font-size: 1rem;
 }
 
 .player-dice {
@@ -515,7 +569,6 @@ h1 {
   overflow-y: scroll;
   list-style: none;
   padding-left: 0;
-  /* TODO: clean up these overrides so they're not needed. That span+span stuff is problematic.*/
 }
 .log-list li {
   border-top: 2px groove ThreeDFace;
@@ -530,9 +583,8 @@ h1 {
 .log-list .chr-background {
   color: #00538f;
 }
-.log-list .dice-divided span:first-child {
+.log-list .divided:first-child {
   border-color: black;
-  margin-right: 3px;
 }
 .log-list .datetime {
   display: block;

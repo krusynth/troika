@@ -37,11 +37,11 @@
     <fieldset class="form-row character-info">
       <div class="form-row">
         <input class="field" type="text" id="character-name"
-          ng-model="$ctrl.gamestate.character.name" placeholder="Character Name"/>
+          ng-model="gamestate.character.name" placeholder="Character Name"/>
       </div>
       <div class="form-row">
         <input class="field" type="text" id="character-background"
-          ng-model="$ctrl.gamestate.character.background" placeholder="Background"/>
+          ng-model="gamestate.character.background" placeholder="Background"/>
       </div>
     </fieldset>
     <fieldset class="form-row character-attributes">
@@ -49,39 +49,39 @@
         <label for="character-skill">Skill</label>
         <div class="form-cell form-cell-main">
           <input class="field" type="number" id="character-skill"
-            ng-model="$ctrl.gamestate.character.skill"/>
+            ng-model="gamestate.character.skill"/>
         </div>
       </div>
       <div class="form-col form-stamina">
         <label for="character-stamina">Stamina</label>
         <div class="form-cell form-cell-main">
           <input class="field" type="number" id="character-stamina"
-            ng-model="$ctrl.gamestate.character.stamina"
+            ng-model="gamestate.character.stamina"
             ng-class="{warning: staminaWarning()}"/>
         </div>
         <div class="form-cell form-cell-secondary">
           <label for="character-stamina-max">Max</label>
           <input class="field" type="number" id="character-stamina-max"
-            ng-model="$ctrl.gamestate.character.staminaMax"/>
+            ng-model="gamestate.character.staminaMax"/>
         </div>
       </div>
       <div class="form-col form-luck">
         <label for="character-luck">Luck</label>
         <div class="form-cell form-cell-main">
           <input class="field" type="number" id="character-luck"
-            ng-model="$ctrl.gamestate.character.luck"/>
+            ng-model="gamestate.character.luck"/>
         </div>
         <div class="form-cell form-cell-secondary">
           <label for="character-luck-max">Max</label>
           <input class="field" type="number" id="character-luck-max"
-            ng-model="$ctrl.gamestate.character.luckMax"/>
+            ng-model="gamestate.character.luckMax"/>
         </div>
       </div>
     </fieldset>
     <fieldset class="form-row character-skills character-list">
       <h2>Skills</h2>
       <button id="add-skill" class="add-button mini-button" title="Add Skill"
-        ng-click="$ctrl.gamestate.character.skills.push({used: false, name: '', value: ''})">
+        ng-click="gamestate.character.skills.push({used: false, name: '', value: ''})">
         <span class="fas fa-plus"></span>
       </button>
       <ul class="item-list skill-list" id="skill-list">
@@ -91,71 +91,150 @@
            ! 2) We use ng-checked & ng-click instead of ng-model for the checkbox.
            !-->
         <li class="skill-row"
-          ng-repeat="(idx, item) in $ctrl.gamestate.character.skills track by $index">
+          ng-repeat="(idx, item) in gamestate.character.skills track by $index">
           <input class="skill-used field checkbox mini-button" type="checkbox" id="character-skills-used-{{idx}}"
-            ng-checked="$ctrl.gamestate.character.skills[idx].used"
-            ng-click="$ctrl.gamestate.character.skills[idx].used = !$ctrl.gamestate.character.skills[idx].used; $ctrl.gamestate.save()"
+            ng-checked="gamestate.character.skills[idx].used"
+            ng-click="gamestate.character.skills[idx].used = !gamestate.character.skills[idx].used; gamestate.save()"
             />
 
           <input class="skill-name field" id="character-skills-name-{{idx}}" type="text"
-            ng-model="$ctrl.gamestate.character.skills[idx].name"
-            ng-change="$ctrl.gamestate.save()"/>
+            ng-model="gamestate.character.skills[idx].name"
+            ng-change="gamestate.save()"/>
 
           <input class="skill-value field" id="character-skills-value-{{idx}}" type="text"
-            ng-model="$ctrl.gamestate.character.skills[idx].value"
-            ng-change="$ctrl.gamestate.save()"/>
+            ng-model="gamestate.character.skills[idx].value"
+            ng-change="gamestate.save()"/>
 
           <input class="skill-total field" id="character-skills-total-{{idx}}" type="text"
-            ng-value="$ctrl.gamestate.character.skillValue(idx)"
+            ng-value="gamestate.character.skillValue(idx)"
             readonly="true"/>
+
+          <button title="Actions Menu" class="item-actions-button"
+            ng-click="$ctrl.showItemContext($event)">
+            <span class="fas fa-ellipsis-v"></span>
+          </button>
+          <nav class="context-menu item-context hide">
+            <ul class="icons">
+              <li><button class="item-action" title="Move up"
+                ng-click="gamestate.character.skills = gamestate.character.skills.move(idx, -1)"
+                ng-hide="idx === 0">
+                <span class="fas fa-caret-up"></span>
+              </button></li>
+              <li><button class="item-action" title="Move down"
+                ng-click="gamestate.character.skills = gamestate.character.skills.move(idx, 1)"
+                ng-hide="idx === (gamestate.character.skills.length -1)">
+                <span class="fas fa-caret-down"></span>
+              </button></li>
+              <li><button class="item-action" title="Remove item"
+                ng-click="gamestate.character.skills.splice(idx, 1)">
+                <span class="fas fa-minus"></span>
+              </button></li>
+            </ul>
+          </nav>
         </li>
       </ul>
     </fieldset>
     <fieldset class="form-row character-inventory character-list">
       <h2>Inventory</h2>
-      <button id="add-inventory" class="add-button mini-button" title="Add Skill"
-        ng-click="$ctrl.gamestate.character.inventory.push('')">
+      <button id="add-inventory" class="add-button mini-button" title="Add Item"
+        ng-click="gamestate.character.inventory.push('')">
         <span class="fas fa-plus"></span>
       </button>
       <ul class="item-list inventory-list" id="inventory-list">
         <li class="inventory-row"
-          ng-repeat="(idx, item) in $ctrl.gamestate.character.inventory track by $index">
+          ng-repeat="(idx, item) in gamestate.character.inventory track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
-            ng-model="$ctrl.gamestate.character.inventory[idx]"/>
+            ng-model="gamestate.character.inventory[idx]"/>
+          <button title="Actions Menu" class="item-actions-button"
+            ng-click="$ctrl.showItemContext($event)">
+            <span class="fas fa-ellipsis-v"></span>
+          </button>
+          <nav class="context-menu item-context hide">
+            <ul class="icons">
+              <li><button class="item-action" title="Move up"
+                ng-click="gamestate.character.inventory = gamestate.character.inventory.move(idx, -1)"
+                ng-hide="idx === 0">
+                <span class="fas fa-caret-up"></span>
+              </button></li>
+              <li><button class="item-action" title="Move down"
+                ng-click="gamestate.character.inventory = gamestate.character.inventory.move(idx, 1)"
+                ng-hide="idx === (gamestate.character.inventory.length -1)">
+                <span class="fas fa-caret-down"></span>
+              </button></li>
+              <li><button class="item-action" title="Remove item"
+                ng-click="gamestate.character.inventory.splice(idx, 1)">
+                <span class="fas fa-minus"></span>
+              </button></li>
+            </ul>
+          </nav>
         </li>
       </ul>
     </fieldset>
     <fieldset class="form-row character-weapons character-list">
       <h2>Wielding</h2>
       <button id="add-weapon" class="add-button mini-button" title="Add Weapon"
-        ng-click="$ctrl.gamestate.character.weapons.push('')">
+        ng-click="gamestate.character.weapons.push('')">
         <span class="fas fa-plus"></span>
       </button>
       <ul class="item-list weapon-list" id="weapon-list">
         <li class="inventory-row"
-          ng-repeat="(idx, item) in $ctrl.gamestate.character.weapons track by $index">
+          ng-repeat="(idx, item) in gamestate.character.weapons track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
-            ng-model="$ctrl.gamestate.character.weapons[idx]"/>
+            ng-model="gamestate.character.weapons[idx]"/>
+          <button title="Actions Menu" class="item-actions-button"
+            ng-click="$ctrl.showItemContext($event)">
+            <span class="fas fa-ellipsis-v"></span>
+          </button>
+          <nav class="context-menu item-context hide">
+            <ul class="icons">
+              <li><button class="item-action" title="Move up">
+                <span class="fas fa-caret-up"></span>
+              </button></li>
+              <li><button class="item-action" title="Move down">
+                <span class="fas fa-caret-down"></span>
+              </button></li>
+              <li><button class="item-action" title="Remove item">
+                <span class="fas fa-minus"></span>
+              </button></li>
+            </ul>
+          </nav>
         </li>
       </ul>
     </fieldset>
     <fieldset class="form-row character-armor character-list">
       <h2>Wearing</h2>
       <button id="add-armor" class="add-button mini-button" title="Add Armor"
-        ng-click="$ctrl.gamestate.character.armor.push('')">
+        ng-click="gamestate.character.armor.push('')">
         <span class="fas fa-plus"></span>
       </button>
       <ul class="item-list armor-list" id="armor-list">
         <li class="inventory-row"
-          ng-repeat="(idx, item) in $ctrl.gamestate.character.armor track by $index">
+          ng-repeat="(idx, item) in gamestate.character.armor track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
-            ng-model="$ctrl.gamestate.character.armor[idx]"/>
+            ng-model="gamestate.character.armor[idx]"/>
+          <button title="Actions Menu" class="item-actions-button"
+            ng-click="$ctrl.showItemContext($event)">
+            <span class="fas fa-ellipsis-v"></span>
+          </button>
+          <nav class="context-menu item-context hide">
+            <ul class="icons">
+              <li><button class="item-action" title="Move up">
+                <span class="fas fa-caret-up"></span>
+              </button></li>
+              <li><button class="item-action" title="Move down">
+                <span class="fas fa-caret-down"></span>
+              </button></li>
+              <li><button class="item-action" title="Remove item">
+                <span class="fas fa-minus"></span>
+              </button></li>
+            </ul>
+          </nav>
         </li>
       </ul>
     </fieldset>
     <fieldset class="form-row character-special">
       <h2>Special</h2>
-      <textarea class="field" id="character-special" ng-model="$ctrl.gamestate.character.special"></textarea>
+      <textarea class="field" id="character-special" ng-model="gamestate.character.special"></textarea>
     </fieldset>
   </form>
   <secton class="modal" id="modal">
