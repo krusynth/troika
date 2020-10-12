@@ -260,7 +260,7 @@ export default class RoomController extends BaseController {
       });
     }
 
-    if(typeof data.room.status.stack !== 'undefined' && typeof data.room.status.turn !== 'undefined') {
+    if(data.room.status && typeof data.room.status.stack !== 'undefined' && typeof data.room.status.turn !== 'undefined') {
       this._handleNextCombatTurn(data);
     }
 
