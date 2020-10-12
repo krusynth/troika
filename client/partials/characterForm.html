@@ -190,13 +190,18 @@
           </button>
           <nav class="context-menu item-context hide">
             <ul class="icons">
-              <li><button class="item-action" title="Move up">
+              <li><button class="item-action" title="Move up"
+                ng-click="gamestate.character.weapons = gamestate.character.weapons.move(idx, -1)"
+                ng-hide="idx === 0">
                 <span class="fas fa-caret-up"></span>
               </button></li>
-              <li><button class="item-action" title="Move down">
+              <li><button class="item-action" title="Move down"
+                ng-click="gamestate.character.weapons = gamestate.character.weapons.move(idx, 1)"
+                ng-hide="idx === (gamestate.character.weapons.length -1)">
                 <span class="fas fa-caret-down"></span>
               </button></li>
-              <li><button class="item-action" title="Remove item">
+              <li><button class="item-action" title="Remove item"
+                ng-click="gamestate.character.weapons.splice(idx, 1)">
                 <span class="fas fa-minus"></span>
               </button></li>
             </ul>
@@ -221,13 +226,18 @@
           </button>
           <nav class="context-menu item-context hide">
             <ul class="icons">
-              <li><button class="item-action" title="Move up">
+              <li><button class="item-action" title="Move up"
+                ng-click="gamestate.character.armor = gamestate.character.armor.move(idx, -1)"
+                ng-hide="idx === 0">
                 <span class="fas fa-caret-up"></span>
               </button></li>
-              <li><button class="item-action" title="Move down">
+              <li><button class="item-action" title="Move down"
+                ng-click="gamestate.character.armor = gamestate.character.armor.move(idx, 1)"
+                ng-hide="idx === (gamestate.character.armor.length -1)">
                 <span class="fas fa-caret-down"></span>
               </button></li>
-              <li><button class="item-action" title="Remove item">
+              <li><button class="item-action" title="Remove item"
+                ng-click="gamestate.character.armor.splice(idx, 1)">
                 <span class="fas fa-minus"></span>
               </button></li>
             </ul>
