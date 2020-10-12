@@ -92,7 +92,8 @@
            !-->
         <li class="skill-row"
           ng-repeat="(idx, item) in gamestate.character.skills track by $index">
-          <input class="skill-used field checkbox mini-button" type="checkbox" id="character-skills-used-{{idx}}"
+          <input class="skill-used field checkbox mini-button" type="checkbox"
+            title="Mark as used"
             ng-checked="gamestate.character.skills[idx].used"
             ng-click="gamestate.character.skills[idx].used = !gamestate.character.skills[idx].used; gamestate.save()"
             />
@@ -102,14 +103,16 @@
             ng-change="gamestate.save()"/>
 
           <input class="skill-value field" id="character-skills-value-{{idx}}" type="text"
+            title="Skill rank"
             ng-model="gamestate.character.skills[idx].value"
             ng-change="gamestate.save()"/>
 
           <input class="skill-total field" id="character-skills-total-{{idx}}" type="text"
+            title="Skill total"
             ng-value="gamestate.character.skillValue(idx)"
             readonly="true"/>
 
-          <button title="Actions Menu" class="item-actions-button"
+          <button title="Move/delete" class="item-actions-button"
             ng-click="$ctrl.showItemContext($event)">
             <span class="fas fa-ellipsis-v"></span>
           </button>
@@ -145,7 +148,7 @@
           ng-repeat="(idx, item) in gamestate.character.inventory track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
             ng-model="gamestate.character.inventory[idx]"/>
-          <button title="Actions Menu" class="item-actions-button"
+          <button title="Move/delete" class="item-actions-button"
             ng-click="$ctrl.showItemContext($event)">
             <span class="fas fa-ellipsis-v"></span>
           </button>
@@ -181,7 +184,7 @@
           ng-repeat="(idx, item) in gamestate.character.weapons track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
             ng-model="gamestate.character.weapons[idx]"/>
-          <button title="Actions Menu" class="item-actions-button"
+          <button title="Move/delete" class="item-actions-button"
             ng-click="$ctrl.showItemContext($event)">
             <span class="fas fa-ellipsis-v"></span>
           </button>
@@ -212,7 +215,7 @@
           ng-repeat="(idx, item) in gamestate.character.armor track by $index">
           <input class="inventory-item field" id="{{idx}}" type="text"
             ng-model="gamestate.character.armor[idx]"/>
-          <button title="Actions Menu" class="item-actions-button"
+          <button title="Move/delete" class="item-actions-button"
             ng-click="$ctrl.showItemContext($event)">
             <span class="fas fa-ellipsis-v"></span>
           </button>

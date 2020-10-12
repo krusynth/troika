@@ -1,6 +1,7 @@
 const uuid4 = require('uuid4');
 const { Background, Room } = require('../models');
 const Dice = require('../lib/Dice.js');
+require('../lib/arrayRandomize.js');
 
 class GameEngine {
   gameData = {};
@@ -24,14 +25,23 @@ class GameEngine {
   }
 
   registerHandlers() {
+    /* Basic events */
     this.socket.on('init', this.playerInit.bind(this));
+    this.socket.on('disconnect', this.disconnect.bind(this));
+    /* Game events */
     this.socket.on('newGame', this.hostCreateNewGame.bind(this));
     this.socket.on('joinGame', this.playerJoinGame.bind(this));
     this.socket.on('updatePlayer', this.updatePlayer.bind(this));
+    /* Query our backgrounds */
     this.socket.on('randomCharacter', this.randomCharacter.bind(this));
     this.socket.on('findCharacter', this.findCharacter.bind(this));
+    /* Roll some dice */
     this.socket.on('roll', this.roll.bind(this));
-    this.socket.on('disconnect', this.disconnect.bind(this));
+
+    this.socket.on('startCombat', this.startCombat.bind(this));
+    // this.socket.on('updateCombat', this.updateCombat.bind(this));
+    this.socket.on('nextCombatTurn', this.nextCombatTurn.bind(this));
+    this.socket.on('endCombat', this.endCombat.bind(this));
   }
 
   playerInit(data, callback) {
@@ -45,6 +55,10 @@ class GameEngine {
     }
     this.socket.sessionId = data.player.sessionId;
     callback({sessionId: data.player.sessionId});
+  }
+
+  disconnect() {
+    console.log('DISCONNECT : session', this.socket.sessionId);
   }
 
   _ns(id) {
@@ -176,8 +190,8 @@ console.log('room setPlayer result', result);
     .then(callback);
   }
 
+  /* Roll Dice */
   roll(data, callback) {
-
     console.log('roll', data);
     let result = Dice.roll(data.dice);
 
@@ -193,10 +207,85 @@ console.log('room setPlayer result', result);
     });
   }
 
-  disconnect() {
-    console.log('DISCONNECT : session', this.socket.sessionId);
+  /* Handle Combat */
+  startCombat(data, callback) {
+    return Room.findOne({where: {name: data.gameId}}).then(async (room) => {
+      if(!room) {
+        callback(false);
+        return false
+      }
 
+      await room.combatNewRound(data);
+
+      this.io.to(this._ns(room.name)).emit('startCombat', {
+        room: room,
+        datetime: new Date()
+      });
+
+      console.log('startCombat', room.status);
+    });
   }
+
+  // updateCombat(data, callback) {
+  //   return Room.findOne({where: {name: data.gameId}}).then(async (room) => {
+  //     if(!room) {
+  //       callback(false);
+  //       return false
+  //     }
+  //   });
+  // }
+
+  nextCombatTurn(data, callback) {
+    return Room.findOne({where: {name: data.gameId}}).then(async (room) => {
+      if(!room) {
+        callback(false);
+        return false
+      }
+
+      let turn = room.status.turn+1;
+
+      // If the next turn is valid and not the end of the round.
+      if(room.status.stack && room.status.stack[turn] && room.status.stack[turn].type !== 'end') {
+        await room.combatNextTurn(data);
+
+        this.io.to(this._ns(room.name)).emit('nextCombatTurn', {
+          room: room,
+          datetime: new Date()
+        });
+      }
+      // Otherwise we need to start a new round.
+      else {
+        await room.combatNewRound(data);
+
+        this.io.to(this._ns(room.name)).emit('nextCombatRound', {
+          room: room,
+          datetime: new Date()
+        });
+      }
+
+      console.log('nextCombatTurn', room.status);
+    });
+  }
+
+  endCombat(data, callback) {
+    return Room.findOne({where: {name: data.gameId}}).then(async (room) => {
+      if(!room) {
+        callback(false);
+        return false;
+      }
+
+      await room.combatEnd();
+
+      this.io.to(this._ns(room.name)).emit('endCombat', {
+        room: room,
+        datetime: new Date()
+      });
+
+      console.log('endCombat', room.status);
+    });
+  }
+
+
 }
 
 module.exports = GameEngine;

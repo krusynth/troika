@@ -37,6 +37,11 @@ h1 {
   display: inline-block;
 }
 
+h2 {
+  font-size: 1.2rem;
+  @extend %font-bold;
+}
+
 .room-name {
   float: right;
   color: $yellow;
@@ -166,6 +171,43 @@ h1 {
   }
 }
 
+@keyframes red-glow-outer {
+  0% {
+    box-shadow: 0 0 0 0px rgba(#f00, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(#f00, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(#f00, 0);
+  }
+}
+
+@keyframes red-glow-status {
+  0% {
+    box-shadow: 0 0 0 0px rgba($red-bright, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba($red-bright, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba($red-bright, 0);
+  }
+}
+
+@keyframes green-glow-status {
+  0% {
+    box-shadow: 0 0 0 0px rgba($green-bright, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba($green-bright, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba($green-bright, 0);
+  }
+}
+
+
 .action-button {
   @extend %button;
 }
@@ -197,6 +239,19 @@ h1 {
   }
 }
 
+.medium-button {
+  @extend %button;
+  @extend %font-bold;
+
+  font-size: 0.9rem;
+  height: 25px;
+  width: 25px;
+  border-radius: 3px;
+  padding: 2px 2px;
+  display: inline-block;
+  text-align: center;
+}
+
 .mini-button {
   @extend %button;
 
@@ -219,6 +274,44 @@ h1 {
 
 .add-button {
   font-size: 0.7rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+/* Status effects */
+
+.status-icon {
+  height: 25px;
+  width: 25px;
+  line-height: 25px !important;
+  padding: 2px 2px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.status-combat {
+  background-color: $red-bright;
+  border: 2px solid black;
+  color: white;
+  z-index: 1;
+
+  animation: red-glow-status 2s infinite;
+}
+
+.status-initiative {
+  background-color: $green-bright;
+  border: 2px solid black;
+  color: white;
+  z-index: 1;
+  font-size: 2rem;
+  // Adjust positioning.
+  padding-left: 7px;
+  width: 20px;
+
+  animation: green-glow-status 2s infinite;
 }
 
 .hide {
@@ -231,17 +324,30 @@ h1 {
 
 /* Forms */
 
-.game-setup-form {
-  @extend %page;
-  padding: 1rem 1.5rem;
-  display: inline-block;
-}
-
 .form-row {
   margin-bottom: 0.5rem;
 
   &:last-child {
     margin-bottom: 0;
+  }
+}
+
+.item-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.field {
+  font-size: 0.8rem;
+  margin-right: 3px;
+
+  &:last-child {
+    margin-right: 0;
   }
 }
 
@@ -265,6 +371,12 @@ h1 {
   }
 }
 
+.game-setup-form {
+  @extend %page;
+  padding: 1rem 1.5rem;
+  display: inline-block;
+}
+
 /* Game Board */
 
 .main-game {
@@ -283,20 +395,23 @@ h1 {
   float: left;
   width: 220px;
   padding: 0.5rem 0.5rem;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  position: relative;
+
+  &.active {
+    // box-shadow: 0 0 2px 2px #d39e00;
+    border: 2px solid #c00;
+    animation: red-glow-outer ease-in-out 2s infinite;
+  }
 
   header {
-    margin-bottom: 0.5rem;
+    margin-bottom: 10px;
   }
 }
 
 .character {
   position: relative;;
-
-  h2 {
-    font-size: 1.2rem;
-    @extend %font-bold;
-  }
 
   fieldset {
     padding: 0.25rem 0rem 0;
@@ -342,10 +457,16 @@ h1 {
   bottom: -20px;
 }
 
-.party-heading {
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.party-header {
   @extend %page;
   padding: 0.5rem 0.5rem;
-  margin-right: 10px;
+  margin: 0px 5px 10px;
 }
 
 .player-card {
@@ -473,30 +594,11 @@ h1 {
 .character-list {
   position: relative;
 
-  .item-list {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-
-  .add-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
-
-  .field {
-    font-size: 0.8rem;
-    margin-right: 3px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
   textarea {
     width: calc(100% - 10px);
     min-height: 100px;
+    max-width: 434px;
+    min-width: 434px;
   }
 
   .checkbox {
@@ -517,10 +619,6 @@ h1 {
         font-size: 1rem;
       }
     }
-  }
-
-  .skill-row, .inventory-item  {
-    margin-bottom: 0.25rem;
   }
 
   .skill-row {
@@ -662,6 +760,11 @@ h1 {
     color: $blue;
   }
 
+  .enemy-name {
+    @extend %font-bold;
+    color: $red;
+  }
+
   .dice {
     @extend %font-bold;
   }
@@ -690,6 +793,16 @@ h1 {
     text-align: center;
     margin: 0.5rem auto 0;
   }
+
+  .message-combat-start,
+  .message-combat-end,
+  .message-combat-round {
+    .message-text {
+      font-weight: bold;
+      display: block;
+      text-align:center;
+    }
+  }
 }
 
 /* Notes */
@@ -701,4 +814,22 @@ h1 {
   width: 440px;
   height: 150px;
   font-size: 0.8rem;
+}
+
+/* Combat */
+.player-combat-drawer {
+  position: relative;
+  padding: 0.25rem 0rem 0;
+
+  .action-buttons {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.enemies {
+}
+
+.enemy-row {
+  display: grid;
+  grid-template-columns: auto 28px 22px;
 }

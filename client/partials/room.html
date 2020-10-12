@@ -1,12 +1,16 @@
 <div class="main-game" ng-class="{hide: !ready}" ng-model-options="{ updateOn: 'blur'}">
   <section class="self" id="self">
-    <article class="player me">
-      <header>
+    <article class="player me" ng-class="{active: status.turn.id == gamestate.player.sessionId}">
+      <header class="player-header section-header">
         <form class="form player-form">
-          <div class="form-row">
-            <input type="text" class="field" id="player-name" placeholder="Player Name" ng-model="gamestate.player.name"/>
-          </div>
+          <input type="text" class="field" id="player-name" placeholder="Player Name" ng-model="gamestate.player.name"/>
         </form>
+        <div class="status" ng-if="status.type">
+          <span class="fas fa-caret-right status-icon status-initiative"
+            title="You have the initiative."
+            ng-if="status.turn.id == gamestate.player.sessionId">
+          </span>
+        </div>
       </header>
 
       <secton class="action-buttons">
@@ -24,15 +28,24 @@
           ng-click="$ctrl.toggleDrawer('notes')" ng-class="{active: $ctrl.drawers.notes}">
           <span class="fas fa-pen-nib"></span>
         </button>
+
+        <button class="drawer-toggler action-button show-combat-drawer" title="Open Combat Drawer"
+          ng-click="$ctrl.toggleDrawer('combat')" ng-class="{active: $ctrl.drawers.combat}">
+          <span class="fas fa-swords"></span>
+        </button>
       </secton>
 
       <dice-drawer parent="$ctrl"></dice-drawer>
 
-      <section class="player-notes-drawer drawer" id="player-notes-drawer" ng-hide="!$ctrl.drawers.notes">
-        <h2>My Notes</h2>
+      <section class="player-notes-drawer drawer" ng-hide="!$ctrl.drawers.notes">
+        <h3>My Notes</h3>
         <div class="form-row">
           <textarea id="player-notes" data-autosave="true" class="player-notes field" ng-model="gamestate.character.notes"></textarea>
         </div>
+      </section>
+
+      <section class="player-combat-drawer drawer" ng-hide="!$ctrl.drawers.combat">
+        <div ng-include="'/partials/combatDrawer.html'"></div>
       </section>
 
       <section class="character-list drawer" id="character-list-drawer" ng-hide="!$ctrl.drawers.character">

@@ -28,12 +28,12 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.character-attributes .form-cell-secondary label, .mini-button, .action-button, input, textarea, button, body {
+.character-attributes .form-cell-secondary label, .mini-button, .medium-button, .action-button, input, textarea, button, body {
   font-weight: 400;
 }
 
-.log-list .roll-result, .log-list .dice, .log-list .chr-background, .log-list .chr-name, .log-list .plyr-name, .player-dice .dice-result, .character-list .skill-total, .character-attributes .form-cell-secondary .field, .character-attributes .form-cell-main .field, .character-attributes label, .player-card .character-name,
-.player-card .character-background, .character h2, .mini-button, .alt.mini-button .fa-layers-text, .alt.action-button .fa-layers-text, .mini-button .fa-layers-text, .action-button .fa-layers-text, .room-name, h1, h2, h3, h4, h5, h6 {
+.log-list .roll-result, .log-list .dice, .log-list .enemy-name, .log-list .chr-background, .log-list .chr-name, .log-list .plyr-name, .player-dice .dice-result, .character-list .skill-total, .character-attributes .form-cell-secondary .field, .character-attributes .form-cell-main .field, .character-attributes label, .player-card .character-name,
+.player-card .character-background, .mini-button, .medium-button, .alt.mini-button .fa-layers-text, .alt.medium-button .fa-layers-text, .alt.action-button .fa-layers-text, .mini-button .fa-layers-text, .medium-button .fa-layers-text, .action-button .fa-layers-text, .room-name, h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
@@ -41,7 +41,7 @@ h1 {
   font-weight: 800;
 }
 
-.mini-button, .action-button, input, textarea, button, body {
+.mini-button, .medium-button, .action-button, input, textarea, button, body {
   font-family: "Alegreya", serif;
 }
 
@@ -74,6 +74,10 @@ h1 {
   display: inline-block;
 }
 
+h2 {
+  font-size: 1.2rem;
+}
+
 .room-name {
   float: right;
   color: #f2e2ae;
@@ -88,13 +92,13 @@ h1 {
   font-size: 0.85rem;
 }
 
-.log-page, .party-heading, .player, .modal .content, .game-setup-form {
+.log-page, .party-header, .player, .game-setup-form, .modal .content {
   background: #e5dcd3 url(/assets/img/bedge_grunge.jpg);
   border: 2px solid #000;
   box-shadow: 3px 4px 5px 1px rgba(0, 0, 0, 0.6);
 }
 
-.mini-button, .action-button {
+.mini-button, .medium-button, .action-button {
   position: relative;
   margin: 0;
   border-radius: 5px;
@@ -109,13 +113,13 @@ h1 {
   background-color: rgba(0, 0, 0, 0);
   color: white;
 }
-.mini-button span, .action-button span {
+.mini-button span, .medium-button span, .action-button span {
   background: none;
 }
-.mini-button span:after, .action-button span:after {
+.mini-button span:after, .medium-button span:after, .action-button span:after {
   background: none;
 }
-.mini-button :after, .action-button :after {
+.mini-button :after, .medium-button :after, .action-button :after {
   content: "";
   position: absolute;
   top: 0px;
@@ -125,47 +129,47 @@ h1 {
   border-radius: 5px 5px 0 0;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
 }
-.mini-button:active:not(:disabled), .action-button:active:not(:disabled) {
+.mini-button:active:not(:disabled), .medium-button:active:not(:disabled), .action-button:active:not(:disabled) {
   top: 2px;
   box-shadow: 2px 1px 2px #666;
 }
-.mini-button:disabled, .action-button:disabled {
+.mini-button:disabled, .medium-button:disabled, .action-button:disabled {
   box-shadow: none;
 }
-.mini-button:not(:disabled), .action-button:not(:disabled) {
+.mini-button:not(:disabled), .medium-button:not(:disabled), .action-button:not(:disabled) {
   background-image: linear-gradient(#00538f, #0071c2);
 }
-.mini-button:hover:not(:disabled), .action-button:hover:not(:disabled), .active.mini-button:not(:disabled), .active.action-button:not(:disabled) {
+.mini-button:hover:not(:disabled), .medium-button:hover:not(:disabled), .action-button:hover:not(:disabled), .active.mini-button:not(:disabled), .active.medium-button:not(:disabled), .active.action-button:not(:disabled) {
   background-image: linear-gradient(#007fdc, #109bff);
 }
-.mini-button:disabled, .action-button:disabled {
+.mini-button:disabled, .medium-button:disabled, .action-button:disabled {
   border-color: #444422;
   background-image: linear-gradient(#666633, #888844);
 }
-.mini-button .fa-layers-text, .action-button .fa-layers-text {
+.mini-button .fa-layers-text, .medium-button .fa-layers-text, .action-button .fa-layers-text {
   color: #00538f;
 }
-.mini-button .fa-layers-text:hover .text, .action-button .fa-layers-text:hover .text {
+.mini-button .fa-layers-text:hover .text, .medium-button .fa-layers-text:hover .text, .action-button .fa-layers-text:hover .text {
   color: #007fdc;
 }
-.alt.mini-button, .alt.action-button {
+.alt.mini-button, .alt.medium-button, .alt.action-button {
   background-color: rgba(0, 0, 0, 0);
   color: white;
 }
-.alt.mini-button:not(:disabled), .alt.action-button:not(:disabled) {
+.alt.mini-button:not(:disabled), .alt.medium-button:not(:disabled), .alt.action-button:not(:disabled) {
   background-image: linear-gradient(#6b0f0f, #981515);
 }
-.alt.mini-button:hover:not(:disabled), .alt.action-button:hover:not(:disabled), .alt.active.mini-button:not(:disabled), .alt.active.action-button:not(:disabled) {
+.alt.mini-button:hover:not(:disabled), .alt.medium-button:hover:not(:disabled), .alt.action-button:hover:not(:disabled), .alt.active.mini-button:not(:disabled), .alt.active.medium-button:not(:disabled), .alt.active.action-button:not(:disabled) {
   background-image: linear-gradient(#ae1818, #db1f1f);
 }
-.alt.mini-button:disabled, .alt.action-button:disabled {
+.alt.mini-button:disabled, .alt.medium-button:disabled, .alt.action-button:disabled {
   border-color: #444422;
   background-image: linear-gradient(#666633, #888844);
 }
-.alt.mini-button .fa-layers-text, .alt.action-button .fa-layers-text {
+.alt.mini-button .fa-layers-text, .alt.medium-button .fa-layers-text, .alt.action-button .fa-layers-text {
   color: #6b0f0f;
 }
-.alt.mini-button .fa-layers-text:hover .text, .alt.action-button .fa-layers-text:hover .text {
+.alt.mini-button .fa-layers-text:hover .text, .alt.medium-button .fa-layers-text:hover .text, .alt.action-button .fa-layers-text:hover .text {
   color: #007fdc;
 }
 
@@ -186,6 +190,39 @@ h1 {
 .item-context .item-action span, .expander-button span, .lock-button span {
   width: 15px;
   text-align: center;
+}
+@keyframes red-glow-outer {
+  0% {
+    box-shadow: 0 0 0 0px rgba(255, 0, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(255, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(255, 0, 0, 0);
+  }
+}
+@keyframes red-glow-status {
+  0% {
+    box-shadow: 0 0 0 0px rgba(204, 0, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(204, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(204, 0, 0, 0);
+  }
+}
+@keyframes green-glow-status {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 204, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(0, 204, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0px rgba(0, 204, 0, 0);
+  }
 }
 .dice-icon {
   font-size: 1.1rem;
@@ -214,6 +251,16 @@ h1 {
   padding-right: 0;
 }
 
+.medium-button {
+  font-size: 0.9rem;
+  height: 25px;
+  width: 25px;
+  border-radius: 3px;
+  padding: 2px 2px;
+  display: inline-block;
+  text-align: center;
+}
+
 .mini-button {
   font-size: 0.8rem;
   height: 23px;
@@ -230,6 +277,40 @@ h1 {
 
 .add-button {
   font-size: 0.7rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+/* Status effects */
+.status-icon {
+  height: 25px;
+  width: 25px;
+  line-height: 25px !important;
+  padding: 2px 2px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.status-combat {
+  background-color: #c00;
+  border: 2px solid black;
+  color: white;
+  z-index: 1;
+  animation: red-glow-status 2s infinite;
+}
+
+.status-initiative {
+  background-color: #0c0;
+  border: 2px solid black;
+  color: white;
+  z-index: 1;
+  font-size: 2rem;
+  padding-left: 7px;
+  width: 20px;
+  animation: green-glow-status 2s infinite;
 }
 
 .hide {
@@ -241,16 +322,28 @@ h1 {
 }
 
 /* Forms */
-.game-setup-form {
-  padding: 1rem 1.5rem;
-  display: inline-block;
-}
-
 .form-row {
   margin-bottom: 0.5rem;
 }
 .form-row:last-child {
   margin-bottom: 0;
+}
+
+.item-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.item-list li {
+  margin-bottom: 0.25rem;
+}
+
+.field {
+  font-size: 0.8rem;
+  margin-right: 3px;
+}
+.field:last-child {
+  margin-right: 0;
 }
 
 .modal {
@@ -267,6 +360,11 @@ h1 {
   display: grid;
 }
 
+.game-setup-form {
+  padding: 1rem 1.5rem;
+  display: inline-block;
+}
+
 /* Game Board */
 .main-game {
   width: 100%;
@@ -281,17 +379,20 @@ h1 {
   float: left;
   width: 220px;
   padding: 0.5rem 0.5rem;
-  margin-right: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+  position: relative;
+}
+.player.active {
+  border: 2px solid #c00;
+  animation: red-glow-outer ease-in-out 2s infinite;
 }
 .player header {
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
 }
 
 .character {
   position: relative;
-}
-.character h2 {
-  font-size: 1.2rem;
 }
 .character fieldset {
   padding: 0.25rem 0rem 0;
@@ -329,9 +430,15 @@ h1 {
   bottom: -20px;
 }
 
-.party-heading {
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.party-header {
   padding: 0.5rem 0.5rem;
-  margin-right: 10px;
+  margin: 0px 5px 10px;
 }
 
 .player-card {
@@ -431,26 +538,11 @@ h1 {
 .character-list {
   position: relative;
 }
-.character-list .item-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.character-list .add-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-.character-list .field {
-  font-size: 0.8rem;
-  margin-right: 3px;
-}
-.character-list .field:last-child {
-  margin-right: 0;
-}
 .character-list textarea {
   width: calc(100% - 10px);
   min-height: 100px;
+  max-width: 434px;
+  min-width: 434px;
 }
 .character-list .checkbox {
   width: 21px;
@@ -468,9 +560,6 @@ h1 {
   top: 0px;
   left: 0px;
   font-size: 1rem;
-}
-.character-list .skill-row, .character-list .inventory-item {
-  margin-bottom: 0.25rem;
 }
 .character-list .skill-row {
   display: grid;
@@ -583,6 +672,9 @@ h1 {
 .log-list .chr-background {
   color: #00538f;
 }
+.log-list .enemy-name {
+  color: #6b0f0f;
+}
 .log-list .divided:first-child {
   border-color: black;
 }
@@ -604,6 +696,13 @@ h1 {
   text-align: center;
   margin: 0.5rem auto 0;
 }
+.log-list .message-combat-start .message-text,
+.log-list .message-combat-end .message-text,
+.log-list .message-combat-round .message-text {
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
 
 /* Notes */
 .player-notes-drawer {
@@ -614,6 +713,20 @@ h1 {
   width: 440px;
   height: 150px;
   font-size: 0.8rem;
+}
+
+/* Combat */
+.player-combat-drawer {
+  position: relative;
+  padding: 0.25rem 0rem 0;
+}
+.player-combat-drawer .action-buttons {
+  margin-bottom: 0.5rem;
+}
+
+.enemy-row {
+  display: grid;
+  grid-template-columns: auto 28px 22px;
 }
 
 /*# sourceMappingURL=main.css.map */

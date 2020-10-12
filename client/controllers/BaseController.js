@@ -35,7 +35,6 @@ export default class BaseController {
         socket: this.socket,
         gameId: this.$state.params.roomId
       });
-console.log('gamestate data sending', this.$scope.gamestate.data);
       return this.socket.send('init', this.$scope.gamestate.data)
     })
     .then(result => {
@@ -50,7 +49,6 @@ console.log('gamestate data sending', this.$scope.gamestate.data);
     if(!data) { data = {}; }
     let req = Object.assign(data, this.$scope.gamestate.data);
 
-    console.log('socket.send', data, req);
     return this.socket.send(name, data);
   }
 
@@ -63,17 +61,15 @@ console.log('gamestate data sending', this.$scope.gamestate.data);
   joinGame() {
     return this.socket.send('joinGame', this.$scope.gamestate.data).then(data => {
       let room = data.room;
-      console.log('joinGame room', room);
+
       if(room) {
         if(this.$state.current.name !== 'room') {
-          console.log('redirect to room', room.name);
           this.$state.go('room', {roomId: room.name});
         }
       }
       else {
         alert('Room not found, please create a new one.');
         if(this.$state.current.name !== 'lobby') {
-          console.log('redirect to lobby');
           this.$state.go('lobby');
         }
       }

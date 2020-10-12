@@ -1,0 +1,38 @@
+<h2>Combat</h2>
+<section class="enemies">
+  <button id="add-enemy" class="add-button mini-button" title="Add Enemy"
+    ng-click="status.enemies.push({name: '', value: ''})">
+    <span class="fas fa-plus"></span>
+  </button>
+  <ul class="item-list enemies-list">
+    <li class="enemy-row" id="enemy-{{idx}}"
+      ng-repeat="(idx, item) in status.enemies track by $index">
+      <input type="text" class="enemy-name field" placeholder="Enemy Name"
+        ng-model="status.enemies[idx].name">
+      <input type="number" class="enemy-value field" title="Initiative"
+        ng-model="status.enemies[idx].value">
+      <button class="mini-button clear-button alt" title="Remove Enemy"
+        ng-click="status.enemies.splice(idx, 1)">
+        <span class="fas fa-minus"></span>
+      </button>
+    </li>
+  </ul>
+</section>
+<section class="action-buttons">
+  <button class="action-button medium-button" title="Start Combat" ng-if="status.type != 'combat'"
+    ng-click="$ctrl.startCombat()">
+    <span class="fas fa-play"></span>
+  </button>
+  <button class="action-button medium-button" title="Stop Combat" ng-if="status.type == 'combat'"
+    ng-click="$ctrl.stopCombat()">
+    <span class="fas fa-stop"></span>
+  </button>
+  <button class="action-button medium-button" title="Stop Combat" ng-disabled="status.type != 'combat'"
+    ng-click="$ctrl.nextCombatTurn()">
+    <span class="fas fa-forward"></span>
+  </button>
+  <button class="action-button medium-button alt" title="Clear enemies list"
+    ng-click="$ctrl.clearEnemies()">
+    <span class="fas fa-times"></span>
+  </button>
+</section>

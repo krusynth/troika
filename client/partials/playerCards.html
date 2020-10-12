@@ -1,11 +1,18 @@
-<section class="party-heading">
-  <h2>The Party</h2>
+<section class="party-header section-header">
+  <h2 ng-if="gamestate.character.name">Allies</h2>
+  <h2 ng-if="!gamestate.character.name">The Party</h2>
 </section>
 
-<article class="player player-card" ng-repeat="(key, player) in players track by key">
-  <header>
+<article class="player player-card" ng-repeat="(key, player) in players track by key" ng-class="{active: status.turn.id == key}">
+  <header class="party-player-header section-header">
     <div class="form-row">
       <h2 class="player-name" id="player-name">{{player.player.name}}</h2>
+    </div>
+    <div class="status" ng-if="status.type">
+      <span class="fas fa-caret-right status-icon status-initiative"
+        title="You have the initiative."
+        ng-if="status.turn.id == key">
+      </span>
     </div>
   </header>
   <section class="character-list">

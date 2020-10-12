@@ -10,7 +10,8 @@ export default class RoomController extends BaseController {
   drawers = {
     character: false,
     dice: false,
-    notes: false
+    notes: false,
+    combat: false
   };
 
   messages = [];
@@ -38,17 +39,21 @@ export default class RoomController extends BaseController {
     }
   }
 
-  save() {
-    console.log('RoomController.save', this.$scope.gamestate.data);
-  }
-
   init() {
     super.init()
     .then(() => this.joinGame() )
     .then(data => {
-      console.log('init room', data);
       if(data) {
         this.updateRoom(data);
+        this.loadStatus(data);
+
+        // Open drawers that should be active.  On init only!
+        if(this.$scope.gamestate.character.name) {
+          this.drawers.character = true;
+        }
+        if(this.$scope.status.type == 'combat') {
+          this.drawers.combat = true;
+        }
 
         this.attachListeners();
       }
@@ -56,14 +61,24 @@ export default class RoomController extends BaseController {
   }
 
   attachListeners() {
-    this.socket.listen('roll', data => this.handleRoll(data));
+    /** Socket Events **/
+    // Basic Events
     this.socket.listen('playerJoined', data => this.updateRoom(data));
     this.socket.listen('playerUpdated', data => this.updateRoom(data));
+
+    this.socket.listen('roll', data => this.handleRoll(data));
+
+    // Combat
+    this.socket.listen('startCombat', data => this.handleStartCombat(data));
+    this.socket.listen('nextCombatTurn', data => this.handleNextCombatTurn(data));
+    this.socket.listen('nextCombatRound', data => this.handleNextCombatRound(data));
+    this.socket.listen('endCombat', data => this.handleEndCombat(data));
+
+    /** Document Events **/
     this.$document.on('click', e => this.clearContextMenus());
   }
 
   updateRoom(data) {
-    console.log('updating room', data);
     this.roomMessage(data);
 
     this.loadMe(data.room);
@@ -77,10 +92,6 @@ export default class RoomController extends BaseController {
 
     if(me && me.character) {
       this.$scope.gamestate.loadCharacter(me.character);
-
-      if(this.$scope.gamestate.character.name) {
-        this.drawers.character = true;
-      }
     }
   }
 
@@ -97,7 +108,6 @@ export default class RoomController extends BaseController {
       let key = keys[i];
       let player = dupe(room.players[key]);
       player.show = false;
-      console.log('loadPlayer', keys[i], player);
 
       // Don't do anything about me.
       if(
@@ -113,12 +123,10 @@ export default class RoomController extends BaseController {
   }
 
   roomMessage(data) {
-    console.log('roomMessage', data);
     let msg;
 
     switch(data.event) {
       case 'playerJoined':
-      console.log('playerJoined', data.player, this.$scope.players[data.player]);
         if(
           data.player !== this.$scope.gamestate.player.sessionId &&
           !this.$scope.players[data.player] &&
@@ -166,12 +174,10 @@ export default class RoomController extends BaseController {
   }
 
   handleRoll(data) {
-    console.log('got roll', data);
     data['type'] = 'roll';
     data['die'] = `<die-icon value="${data.dice}"></die-icon>`;
 
     this.$scope.content.messages.unshift(data);
-    console.log('messages', this.$scope.content.messages);
     this.$scope.$apply();
   }
 
@@ -189,11 +195,8 @@ export default class RoomController extends BaseController {
 
   randomCharacter() {
     this.socket.send('randomCharacter', {}).then(chr => {
-      console.log('random chr', chr);
       this.$scope.gamestate.loadCharacter(this.processCharacter(chr));
       this.$scope.$apply();
-
-      console.log('random chr processed', this.$scope.gamestate.character.data);
     });
   }
 
@@ -202,12 +205,8 @@ export default class RoomController extends BaseController {
     if(search.length) {
       this.socket.send('findCharacter', {search: search}).then(chr => {
         if(chr) {
-          console.log('found chr', chr);
-
           this.$scope.gamestate.loadCharacter(this.processCharacter(chr));
           this.$scope.$apply();
-
-          console.log('find chr processed', this.$scope.gamestate.character.data);
         }
         else {
           alert('Background not found, please try a more specific term.');
@@ -238,6 +237,135 @@ export default class RoomController extends BaseController {
   clearContextMenus(e) {
     // e.stopPropagation();
     $('.context-menu').addClass('hide');
+  }
+
+  /* Status & Combat */
+
+  // loadStatus is only called once at room load.
+  loadStatus(data) {
+    this.$scope.status = data.room.status;
+
+    if(!this.$scope.status) {
+      this.$scope.status = {};
+    }
+
+    if(!this.$scope.status.enemies) {
+      this.$scope.status.enemies = [];
+    }
+
+    if(!this.$scope.status.enemies.length) {
+      this.$scope.status.enemies.push({
+        name: '',
+        value: ''
+      });
+    }
+
+    if(typeof data.room.status.stack !== 'undefined' && typeof data.room.status.turn !== 'undefined') {
+      this._handleNextCombatTurn(data);
+    }
+
+    this.$scope.$apply();
+  }
+
+  startCombat() {
+    if(!this._combatHasEnemies()) {
+      alert('Please create an enemy before starting combat.');
+    }
+    else {
+      this.$scope.status.type = 'combat';
+
+      this.send('startCombat', this.$scope.status);
+    }
+  }
+
+  _combatHasEnemies() {
+    let hasEnemies = false;
+    if(this.$scope.status.enemies) {
+      for(let i = 0; i < this.$scope.status.enemies.length; i++) {
+        if(this.$scope.status.enemies[i].name && this.$scope.status.enemies[i].value) {
+          hasEnemies = true;
+          break;
+        }
+      }
+    }
+    return hasEnemies;
+  }
+
+  nextCombatTurn() {
+    if(!this._combatHasEnemies()) {
+      alert('Please create an enemy before continuing combat.');
+    }
+    this.send('nextCombatTurn', this.$scope.status);
+  }
+
+  stopCombat() {
+    this.send('endCombat');
+  }
+
+  clearEnemies() {
+    this.$scope.status.enemies = [{
+      name: '',
+      value: ''
+    }];
+    // this.$scope.$apply();
+  }
+
+
+  // Listeners
+  handleStartCombat(data) {
+    this.$scope.status = data.room.status;
+
+    this.$scope.content.messages.unshift({
+      type: 'startCombat',
+      datetime: data.datetime
+    });
+    this._handleNextCombatTurn(data);
+    this.$scope.$apply();
+  }
+
+  handleNextCombatTurn(data) {
+    this.$scope.status = data.room.status;
+
+    this._handleNextCombatTurn(data);
+    this.$scope.$apply();
+  }
+
+  _handleNextCombatTurn(data) {
+    let turn = data.room.status.stack[data.room.status.turn];
+    this.$scope.status.turn = turn;
+
+    if(turn.type === 'player') {
+      turn.player = data.room.players[turn.id];
+    }
+
+    this.$scope.content.messages.unshift({
+      type: 'combatTurn',
+      datetime: data.datetime,
+      turn: turn
+    });
+  }
+
+  handleNextCombatRound(data) {
+    this.$scope.status = data.room.status;
+
+    this.$scope.content.messages.unshift({
+      type: 'combatRound',
+      datetime: data.datetime
+    });
+    this._handleNextCombatTurn(data);
+    this.$scope.$apply();
+  }
+
+  handleEndCombat(data) {
+    // We want to update the status, but not lose the enemies.
+    this.$scope.status.type = '';
+    this.$scope.status.turn = null;
+
+    this.$scope.content.messages.unshift({
+      type: 'endCombat',
+      datetime: data.datetime
+    });
+    this.$scope.$apply();
   }
 }
 

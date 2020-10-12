@@ -1,5 +1,11 @@
 <section class="log-page" id="log-page">
-  <h2>Events</h2>
+  <header class="log-header section-header">
+    <h2>Events</h2>
+
+    <div class="status" ng-switch="status.type">
+      <span ng-switch-when="combat" class="status-icon status-combat fas fa-swords" title="Combat!">
+    </div>
+  </header>
   <ul id="log-list" class="log-list">
     <li ng-repeat="msg in content.messages" class="{{msg.type}}">
       <span ng-switch on="msg.type">
@@ -35,6 +41,7 @@
           </span>
           has joined the room.
         </span>
+
         <span ng-switch-when="playerUpdated">
           <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
 
@@ -48,6 +55,53 @@
           </span>
           <span ng-if="!msg.player.character.name">
             <span class="plyr-name">{{msg.player.player.name}}</span>
+          </span>
+        </span>
+
+        <span ng-switch-when="startCombat" class="status-message message-combat-start">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span class="message-text">
+            <span class="fas fa-swords"></span>
+            Combat Start
+          </span>
+        </span>
+
+        <span ng-switch-when="endCombat" class="status-message message-combat-end">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span class="message-text">
+            <span class="fas fa-swords"></span>
+            Combat End
+          </span>
+        </span>
+
+        <span ng-switch-when="combatRound" class="status-message message-combat-round">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span class="message-text">
+            <span class="fas fa-swords"></span>
+            New Combat Round
+          </span>
+        </span>
+
+        <span ng-switch-when="combatTurn" class="status-message message-combat-turn">
+          <span class="datetime">{{ msg.datetime | date:'shortTime' }}</span>
+
+          <span class="message-text">
+            <span class="fas fa-swords"></span>
+            <span class="text-turn">
+              Turn:
+            </span>
+            <span ng-if="msg.turn.type == 'player'">
+              <span class="chr-name">{{msg.turn.player.character.name}}</span>
+              <span ng-if="msg.turn.player.character.background">the
+                <span class="chr-background">{{msg.turn.player.character.background}}</span>
+              </span>
+            </span>
+            <span ng-fi="msg.turn.type == 'enemy'">
+              <span class="enemy-name">{{msg.turn.name}}</span>
+            </span>
           </span>
         </span>
       </span>
