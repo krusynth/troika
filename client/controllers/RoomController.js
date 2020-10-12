@@ -44,6 +44,15 @@ export default class RoomController extends BaseController {
     .then(() => this.joinGame() )
     .then(data => {
       if(data) {
+        if(!this.$scope.gamestate.player.name) {
+          let name = '';
+          while(!name.length) {
+            name = prompt('Please enter your name. (You\'ll name your character later!)');
+          }
+
+          this.$scope.gamestate.player.name = name;
+        }
+
         this.updateRoom(data);
         this.loadStatus(data);
 
