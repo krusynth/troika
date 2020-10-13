@@ -376,7 +376,6 @@ h2 {
 }
 
 .player {
-  float: left;
   width: 220px;
   padding: 0.5rem 0.5rem;
   margin-right: 5px;
@@ -441,8 +440,17 @@ h2 {
   margin: 0px 5px 10px;
 }
 
+.party-container {
+  column-width: 220px;
+  max-width: calc(100% - 30px);
+}
+
 .player-card {
   margin-bottom: 10px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  break-after: column;
+  display: inline-grid;
 }
 .player-card header {
   margin-bottom: 0;
@@ -487,15 +495,14 @@ h2 {
 }
 
 .character-attributes {
-  display: flex;
   padding: 0 0 7px;
 }
 .character-attributes .form-col {
-  flex-grow: 1;
+  display: inline-block;
   text-align: center;
-  margin-right: 0.12rem;
+  margin-right: 5px;
   border-right: 2px groove ThreeDFace;
-  padding-right: 0.12rem;
+  padding-right: 5px;
 }
 .character-attributes .form-col:last-child {
   margin-right: 0;
