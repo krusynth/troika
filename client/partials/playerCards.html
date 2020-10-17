@@ -61,7 +61,7 @@
             <fieldset class="form-row character-skills character-list">
               <h2>Skills</h2>
               <ul class="item-list skill-list" id="skill-list">
-                <li ng-repeat="item in player.character.skills">
+                <li ng-repeat="item in player.character.skills" ng-if="item.name">
                   {{item.name}}: {{item.value}} ({{item.value + player.character.skill}})
                 </li>
               </ul>
