@@ -62,7 +62,7 @@
               <h2>Skills</h2>
               <ul class="item-list skill-list" id="skill-list">
                 <li ng-repeat="item in player.character.skills" ng-if="item.name">
-                  {{item.name}}: {{item.value}} ({{item.value + player.character.skill}})
+                  {{item.name}}: {{item.value}} ({{(item.value - 0) + (player.character.skill - 0)}})
                 </li>
               </ul>
             </fieldset>
