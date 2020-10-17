@@ -14,3 +14,7 @@ node_modules
 # Cache
 .cache
 client/.cache
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
